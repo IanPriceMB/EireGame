@@ -1,18 +1,10 @@
 import { useEffect, useState } from 'react';
 import { TBattleData } from '../../battles/types';
-import { TCharacter, TEnemy, TItem } from '../../GlobalTypes';
+import { TCharacter, TEnemy } from '../../GlobalTypes';
 import { transformCharacter, transformEnemy } from './utils';
 
 export type TUseBattlers = {
   battleData: TBattleData
-}
-
-export type THandleAttack = {
-  enemy: TEnemy
-}
-
-export type THandleItem = {
-  item: TItem
 }
 
 export const useBattlers = ({ battleData }:TUseBattlers) => {
@@ -28,17 +20,10 @@ export const useBattlers = ({ battleData }:TUseBattlers) => {
     setEnemies(battleReadyEnemies);
   }, [battleData.allies, battleData.characters, battleData.enemies]);
 
-  const handleAttack = ({ enemy }:THandleAttack) => console.log(enemy);
-
-  const handleDefend = () => null;
-
-  const handleItem = ({ item }:THandleItem) => console.log(item);
-
   return {
     allies,
     enemies,
-    handleAttack,
-    handleDefend,
-    handleItem,
+    setAllies,
+    setEnemies,
   };
 };

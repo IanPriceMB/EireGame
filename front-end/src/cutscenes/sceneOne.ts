@@ -19,4 +19,5 @@ export const sceneOne: TCutsceneData = {
     image: `${process.env.PUBLIC_URL}/images/backgrounds/deepWater.jpg`,
     altText: 'Deep Water',
   },
+  sceneEndPath: '/battle',
 };

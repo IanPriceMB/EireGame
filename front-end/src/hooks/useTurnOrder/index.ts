@@ -15,6 +15,6 @@ export const useTurnOrder = ({ combatants }: TUseTurnOrderProps) => {
   }, [combatants]);
 
   return {
-    turn, turnOrder, setTurn, setTurnOrder, active: turnOrder[turn],
+    turn, turnOrder, setTurn, setTurnOrder, active: turnOrder[turn - 1],
   };
 };

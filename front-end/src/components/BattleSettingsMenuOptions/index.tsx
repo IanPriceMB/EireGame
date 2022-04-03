@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '../Button';
 
-export function BattleSettings() {
+export function BattleSettingsMenuOptions() {
   return (
     <li className="settings-menu__option">
       <Button

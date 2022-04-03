@@ -6,4 +6,4 @@ export * from './Button';
 export * from './BattlefieldRow';
 export * from './BattleMenu';
 export * from './TurnOrder';
-export * from './BattleSettings';
+export * from './BattleSettingsMenuOptions';

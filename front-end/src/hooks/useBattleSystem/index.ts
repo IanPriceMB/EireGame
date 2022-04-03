@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { TBattleData } from '../../battles/types';
 import { TItem } from '../../GlobalTypes';
+import { useActiveCombatant } from '../useActiveCombatant';
 import { useBattlers } from '../useBattlers';
 import { useTurnOrder } from '../useTurnOrder';
 
@@ -14,13 +15,20 @@ export const useBattleSystem = ({ battleData }:TUseBattleSystemProps) => {
   const {
     allies,
     enemies,
-    handleAttack,
-    handleDefend,
-    handleItem,
+    setAllies,
+    setEnemies,
   } = useBattlers({ battleData });
 
   const combatants = useMemo(() => [...allies, ...enemies], [allies, enemies]);
   const { turn, turnOrder, active } = useTurnOrder({ combatants });
+
+  const {
+    battleMenuOptionsConfig,
+  } = useActiveCombatant({
+    active,
+    setAllies,
+    setEnemies,
+  });
 
   return {
     allies,
@@ -29,9 +37,7 @@ export const useBattleSystem = ({ battleData }:TUseBattleSystemProps) => {
     turn,
     active,
     turnOrder,
-    handleAttack,
-    handleDefend,
-    handleItem,
     items,
+    battleMenuOptionsConfig,
   };
 };

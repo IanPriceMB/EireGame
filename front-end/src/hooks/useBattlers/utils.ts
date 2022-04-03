@@ -1,9 +1,15 @@
-export const transformCharacter = ({ character }:{ character: string}) => ({
+import { TCharacter, TEnemy } from '../../GlobalTypes';
+
+export const transformCharacter = ({ character }:{ character: string}):TCharacter => ({
   name: character,
   picture: `/images/talkingHeads/${character}/${character.toLowerCase()}Huffy.png`,
   altPicText: `${character} battle card picture`,
   atkValue: 1,
   healthValue: 10,
+  enemyFlag: false,
+  experiencePoints: 0,
+  level: 1,
+  spells: [],
 });
 // export const transformAlly = ({ ally }:{ ally: string}) => ({
 //   name: ally,
@@ -12,10 +18,11 @@ export const transformCharacter = ({ character }:{ character: string}) => ({
 //   atkValue: 1,
 //   healthValue: 10,
 // });
-export const transformEnemy = ({ enemy }:{ enemy: string }) => ({
+export const transformEnemy = ({ enemy }:{ enemy: string }):TEnemy => ({
   name: enemy,
   picture: `/images/enemies/${enemy.toLowerCase()}.jpg`,
   altPicText: `${enemy} battle card picture`,
   atkValue: 1,
   healthValue: 10,
+  enemyFlag: true,
 });

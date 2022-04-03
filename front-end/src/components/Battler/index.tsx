@@ -1,13 +1,8 @@
 import React from 'react';
+import { TEnemy } from '../../GlobalTypes';
 import './index.scss';
 
-export type TBattlerProps = {
-  name: string,
-  picture: string,
-  altPicText: string,
-  atkValue: number,
-  healthValue: number
-}
+export type TBattlerProps = Omit<TEnemy, 'enemyFlag'>
 
 export function Battler({
   name,

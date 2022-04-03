@@ -13,6 +13,7 @@ export type TBackground = {
 export type TCutsceneData = {
   dialogue: TDialogue[],
   background: TBackground,
+  sceneEndPath: string
 }
 
 export type TUseCutsceneProps = {

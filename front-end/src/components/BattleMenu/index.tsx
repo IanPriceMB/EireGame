@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import { TEnemy, TItem } from '../../GlobalTypes';
-import { THandleAttack, THandleItem } from '../../hooks';
+import { TAttack, TUseItem } from '../../hooks';
 import { Button } from '../Button';
 import './index.scss';
 
 export type TBattleMenuProps = {
-  handleAttack: ({ enemy }: THandleAttack) => void,
-  handleDefend: () => void,
-  handleItem: ({ item }: THandleItem) => void,
-  items: TItem[] | undefined
-  enemies: TEnemy[] | undefined
+  menuConfig: {
+    attack?: {
+      onClick: ({ target }: TAttack) => void,
+    },
+    defend?: {
+      onClick: () => void
+    },
+    item?: {
+      onClick:({ item }: TUseItem) => void
+    },
+  },
+  items: TItem[] | undefined,
+  enemies: TEnemy[] | undefined,
 }
 
 export function BattleMenu({
-  handleAttack,
-  handleDefend,
-  handleItem,
+  menuConfig,
   items,
   enemies,
 }: TBattleMenuProps) {
@@ -27,36 +33,42 @@ export function BattleMenu({
   return (
     <div className="battle-menu">
       <div className="battle-menu__main">
-        <Button
-          type="button"
-          className="battle-menu__button"
-          onClick={attackSelect}
-        >
-          Attack
-        </Button>
-        <Button
-          type="button"
-          className="battle-menu__button"
-          onClick={handleDefend}
-        >
-          Defend
-        </Button>
-        <Button
-          type="button"
-          className="battle-menu__button"
-          onClick={itemSelect}
-        >
-          Item
-        </Button>
+        {menuConfig.attack && (
+          <Button
+            type="button"
+            className="battle-menu__button"
+            onClick={attackSelect}
+          >
+            Attack
+          </Button>
+        )}
+        {menuConfig.defend && (
+          <Button
+            type="button"
+            className="battle-menu__button"
+            onClick={menuConfig.defend.onClick}
+          >
+            Defend
+          </Button>
+        )}
+        {menuConfig.item && (
+          <Button
+            type="button"
+            className="battle-menu__button"
+            onClick={itemSelect}
+          >
+            Item
+          </Button>
+        )}
       </div>
       <div className="battle-menu__submenu">
         {/* eslint-disable-next-line no-nested-ternary */}
         {menuState === 'attack' ? (
           <ul className="attack-menu">
-            {enemies?.map((enemy) => (
+            {enemies?.map((enemy:TEnemy) => (
               <li className="attack-menu__item">
                 <Button
-                  onClick={() => handleAttack({ enemy })}
+                  onClick={() => menuConfig.attack?.onClick({ target: enemy })}
                   className="attack-menu__item-button"
                   id={`${enemy.name}-attack-button`}
                 >
@@ -67,10 +79,10 @@ export function BattleMenu({
           </ul>
         ) : menuState === 'item' ? (
           <ul className="item-menu">
-            {items?.map((item) => (
+            {items?.map((item:TItem) => (
               <li className="item-menu__item">
                 <Button
-                  onClick={() => handleItem({ item })}
+                  onClick={() => menuConfig.item?.onClick({ item })}
                   className="item-menu__item-button"
                   id={`${item.name}-item-button`}
                 >

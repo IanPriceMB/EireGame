@@ -15,12 +15,10 @@ export function Battlefield({ battleData }:TBattlefieldProps) {
     allies,
     enemies,
     terrain,
-    handleAttack,
-    handleDefend,
-    handleItem,
     items,
     active,
     turnOrder,
+    battleMenuOptionsConfig,
   } = useBattleSystem({ battleData });
 
   return (
@@ -50,9 +48,7 @@ export function Battlefield({ battleData }:TBattlefieldProps) {
       <TurnOrder turnOrder={turnOrder} active={active} />
       <footer className="battlefield__footer">
         <BattleMenu
-          handleAttack={handleAttack}
-          handleDefend={handleDefend}
-          handleItem={handleItem}
+          menuConfig={battleMenuOptionsConfig}
           items={items}
           enemies={enemies}
         />
