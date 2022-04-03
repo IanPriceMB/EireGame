@@ -25,23 +25,17 @@ export const useActiveCombatant = ({
   const attack = ({ target }:TAttack) => null;
 
   const defend = () => setAllies((state:TCharacter[]) => {
-    console.log('state', state);
-    console.log('active', active);
+    const tempArr = [...state];
     const index = state.findIndex((character) => character.name === active.name);
-    console.log('index', index);
     const char = state.find((character) => character.name === active.name);
 
     if (!char) return state;
 
     const newChar = { ...char, healthValue: char.healthValue + 1 };
 
-    console.log('new char', newChar);
+    tempArr.splice(index, 1, newChar);
 
-    const newState = state.splice(index, 1, newChar);
-
-    console.log('newState', newState);
-
-    return newState;
+    return tempArr;
   });
 
   const useItem = () => null;
