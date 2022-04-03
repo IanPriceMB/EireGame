@@ -1,0 +1,9 @@
+.battlefield {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  &__terrain {
+    max-width: 100%;
+  }
+}

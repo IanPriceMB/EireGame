@@ -1,0 +1,56 @@
+.battler {
+  height: 100%;
+  width: fit-content;
+
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 12px;
+
+  &__name-plate  {
+    width: 100%;
+    flex-grow: 1;
+    max-height: 10%;
+  }
+
+  &__face {
+    flex-grow: 8;
+    width: 100%;
+    max-height: 80%;
+    padding-bottom: 4px;
+  }
+
+  &__vitals {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    max-height: 10%;
+    width: 100%;
+  }
+
+  &__vital-display{
+    flex-basis: 1;
+    flex-grow: 1;
+    max-height: 100%;
+    max-width: 50%;
+
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  &__vital-icon {
+    max-width: 50%;
+  }
+
+  &__vital-icon, &__vital-value {
+    flex-basis: 1;
+    flex-grow: 1;
+  }
+
+}

@@ -1,32 +1,47 @@
 import React from 'react';
-import { CutsceneTextBox, TalkingHead } from '../../components';
-import { useAnimatedText } from '../../hooks/useAnimatedText';
+import { CutsceneTextBox, SettingsMenu, TalkingHead } from '../../components';
+import { TCutsceneData } from '../../cutscenes/types';
+import { useCutscene } from '../../hooks/useCutscene';
+import './index.scss';
 
-export const Cutscene = () => {
-  const sceneData = {
-    dialog: [
-      {
-        character: 'Artemis',
-        dialogue: `Hello there I'm Artemis!`,
-        face: `${process.env.PUBLIC_URL}/images/talkingHeads/Artemis/artemisSad.jpg`,
-        altFaceText: 'Sad Artemis'
-      }
-    ]
-  } 
+type TCutsceneProps = {
+  cutsceneData: TCutsceneData
+}
 
-  const text = useAnimatedText({ textToAnimate: sceneData.dialog[0].dialogue })
+export function Cutscene({ cutsceneData }:TCutsceneProps) {
+  const {
+    dialogue, background, speakerInfo, handleNext,
+  } = useCutscene({ cutsceneData });
 
   return (
-    <div>
-      <footer>
-        {/* <TalkingHead 
-          face={sceneData.dialog[0].face} 
-          altFaceText={sceneData.dialog[0].altFaceText}
-        /> */}
-        <CutsceneTextBox 
-          dialogue={text}
+    <div
+      className="cutscene"
+    >
+      <header className="cutscene__header">
+        <SettingsMenu />
+      </header>
+      <main className="cutscene__main">
+        <div className="cutscene__background">
+          <img
+            src={background.image}
+            alt={background.altText}
+            className="cutscene__background--image"
+          />
+        </div>
+      </main>
+      <footer
+        className="cutscene__footer"
+      >
+        <TalkingHead
+          face={speakerInfo.face}
+          altFaceText={speakerInfo.altFaceText}
+        />
+        <CutsceneTextBox
+          nameplate={speakerInfo.character}
+          dialogue={dialogue}
+          handleNextButton={handleNext}
         />
       </footer>
     </div>
-  )
+  );
 }
