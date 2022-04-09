@@ -1,29 +1,46 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import './index.scss';
 
 export type SizeOptions = 'tiny' | 'small' | 'medium' | 'big' | 'large' | 'enormous'
 
-export type CombatButtonProps = {
-  name: string
-  id: string,
-  onClick: () => void,
-  image: string,
+export type CombatButtonState = {
   remainingUses?: number,
   apCost?: number,
+  name: string,
+  id: string
 }
+
+export interface CombatButtonExtras extends Omit<ComponentProps<'button'>, 'name'> {
+  id: string,
+  handleClick?: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    state: CombatButtonState
+  ) => void,
+  image: string,
+  name: string,
+}
+
+export type CombatButtonProps = CombatButtonExtras & CombatButtonState
 
 export function CombatButton({
   name,
   id,
-  onClick,
+  handleClick,
   image,
   remainingUses,
   apCost,
   ...rest
 }: CombatButtonProps):JSX.Element {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>):void => {
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>):void => {
     e.stopPropagation();
-    onClick();
+    if (handleClick) {
+      handleClick(e, {
+        name,
+        remainingUses,
+        apCost,
+        id,
+      });
+    }
   };
 
   return (
@@ -37,7 +54,8 @@ export function CombatButton({
         className="combat-button__button"
         data-testid="combat-button__button"
         id={id}
-        onClick={(e) => handleClick(e)}
+        onClick={onClick}
+        disabled={rest.disabled || !handleClick}
         {...rest}
       >
         <img
@@ -70,4 +88,5 @@ export function CombatButton({
 CombatButton.defaultProps = {
   remainingUses: undefined,
   apCost: undefined,
+  handleClick: undefined,
 };

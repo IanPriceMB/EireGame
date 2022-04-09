@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
-import { CombatButtonProps } from '../CombatButton';
 import { CombatCardFooter, CombatCardFooterProps } from '../CombatCardFooter';
 import { CombatCardHeader, CombatCardHeaderProps } from '../CombatCardHeader';
 import { StatusBar, StatusBarProps } from '../StatusBar';
 import './index.scss';
 
 export type CombatCardProps = StatusBarProps & CombatCardHeaderProps & CombatCardFooterProps & {
-  onCardSelect: () => void,
+  onCardSelect: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    state: StatusBarProps & CombatCardHeaderProps,
+  ) => void,
 }
 
 export function CombatCard({
@@ -16,6 +18,8 @@ export function CombatCard({
   maxHealth,
   handleAttack,
   onCardSelect,
+  apCost,
+  remainingUses,
 }:CombatCardProps): JSX.Element {
   const fullArtSrc = useMemo(
     () => ((name === 'artemis' || name === 'saoirse')
@@ -31,7 +35,12 @@ export function CombatCard({
         className="combat-card__body"
         data-testid="combat-card__body"
         type="button"
-        onClick={onCardSelect}
+        onClick={(e) => onCardSelect(e, {
+          statuses,
+          name,
+          currentHealth,
+          maxHealth,
+        })}
         id={`${name}CombatCard`}
         name={`${name}CombatCard`}
       >
@@ -44,6 +53,8 @@ export function CombatCard({
         <CombatCardFooter
           name={name}
           handleAttack={handleAttack}
+          apCost={apCost}
+          remainingUses={remainingUses}
         />
       </button>
     </div>

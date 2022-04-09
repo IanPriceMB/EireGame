@@ -11,7 +11,7 @@ function App(): JSX.Element {
     <div className="app">
       <Provider store={store}>
         <Routes>
-          <Route path="/" element={<Home />}>
+          <Route path="*" element={<Home />}>
             <Route path="cutscene" element={<Cutscene cutsceneData={sceneOne} />} />
             <Route path="battle" element={<Battlefield />} />
           </Route>

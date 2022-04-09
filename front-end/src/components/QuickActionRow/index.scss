@@ -1,8 +1,9 @@
 .quick-action-row {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  height: inherit;
-  width: 33%;
+  height: 33%;
+  margin-bottom: 12px;
+  width: 100%;
 }

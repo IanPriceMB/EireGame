@@ -2,7 +2,9 @@ import React from 'react';
 import {
   Outlet, Routes, Route,
 } from 'react-router-dom';
-import { BattleSettingsMenuOptions, HomeSettingsMenuOptions, SettingsMenu } from '../../components';
+import {
+  BattleSettingsMenuOptions, HomeSettingsMenuOptions, SettingsMenu, CutsceneSettingsMenuOptions,
+} from '../../components';
 
 export function Home(): JSX.Element {
   return (
@@ -11,7 +13,7 @@ export function Home(): JSX.Element {
         <Route path="/" element={<SettingsMenu />}>
           <Route index element={<HomeSettingsMenuOptions />} />
           <Route path="battle" element={<BattleSettingsMenuOptions />} />
-          {/* <Route path="cutscene" element={<CutseneSettingsMenuOptions />} /> */}
+          <Route path="cutscene" element={<CutsceneSettingsMenuOptions />} />
         </Route>
       </Routes>
       <Outlet />

@@ -4,9 +4,9 @@ import { QuickActionRow } from '../QuickActionRow';
 import './index.scss';
 
 export type QuickActionsGridProps = {
-  enchantments: CombatButtonProps[],
-  abilities: CombatButtonProps[],
-  tinctures: CombatButtonProps[],
+  enchantments?: CombatButtonProps[],
+  abilities?: CombatButtonProps[],
+  tinctures?: CombatButtonProps[],
 }
 
 export function QuickActionsGrid({
@@ -22,3 +22,9 @@ export function QuickActionsGrid({
     </div>
   );
 }
+
+QuickActionsGrid.defaultProps = {
+  enchantments: undefined,
+  abilities: undefined,
+  tinctures: undefined,
+};

@@ -1,20 +1,57 @@
 .spell-options-modal {
-  height: 100vh;
+  height: inherit;
   width: 100vw;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 5;
 
-
   &__body {
-    height: 80%;
-    padding: 48px
+    height: inherit;
+    position: absolute;
+    width: inherit;
+    max-width: 100%;
+    z-index: 2;
+    height: 60%;
+    max-height: 60%;
+    top: 15%;
+    margin: 0 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > * {
+      flex-basis: 1;
+      flex-grow: 1;
+    }
+  }
+
+  &__quick-title {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
+  }
+
+  &__quick-actions {
+    height: inherit;
+    .quick-action-grid {
+      height: 80%;
+    }
+  }
+
+  &__back-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2;
   }
 
   &__screen {
     height: inherit;
     width: inherit;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, .6);
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 }

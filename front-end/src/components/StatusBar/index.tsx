@@ -9,7 +9,7 @@ export type StatusBarProps = {
 export function StatusBar({ statuses }:StatusBarProps):JSX.Element {
   return (
     <div className="status-bar">
-      {statuses && statuses.map((status) => <StatusIcon status={status} />)}
+      {statuses && statuses.map((status) => <StatusIcon key={status} status={status} />)}
     </div>
   );
 }
