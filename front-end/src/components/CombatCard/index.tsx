@@ -1,15 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CombatButtonProps } from '../CombatButton';
-import { CombatCardFooter } from '../CombatCardFooter';
+import { CombatCardFooter, CombatCardFooterProps } from '../CombatCardFooter';
 import { CombatCardHeader, CombatCardHeaderProps } from '../CombatCardHeader';
 import { StatusBar, StatusBarProps } from '../StatusBar';
 import './index.scss';
 
-export type CombatCardProps = StatusBarProps & CombatCardHeaderProps & {
-  enchantments?: CombatButtonProps[],
-  abilities?: CombatButtonProps[],
-  tinctures?: CombatButtonProps[],
-  handleAttack: () => void,
+export type CombatCardProps = StatusBarProps & CombatCardHeaderProps & CombatCardFooterProps & {
   onCardSelect: () => void,
 }
 
@@ -18,12 +14,16 @@ export function CombatCard({
   name,
   currentHealth,
   maxHealth,
-  enchantments,
-  abilities,
-  tinctures,
   handleAttack,
   onCardSelect,
 }:CombatCardProps): JSX.Element {
+  const fullArtSrc = useMemo(
+    () => ((name === 'artemis' || name === 'saoirse')
+      ? `${process.env.PUBLIC_URL}/images/expressions/${name}/${name}.png`
+      : `${process.env.PUBLIC_URL}/images/enemies/${name}.jpg`),
+    [name],
+  );
+
   return (
     <div className="combat-card">
       {statuses && <StatusBar statuses={statuses} />}
@@ -37,15 +37,12 @@ export function CombatCard({
       >
         <CombatCardHeader name={name} maxHealth={maxHealth} currentHealth={currentHealth} />
         <img
-          src={`${process.env.PUBLIC_URL}/images/expressions/${name}/${name}.png`}
+          src={fullArtSrc}
           alt={`${name} full art`}
           className="combat-card__full-art"
         />
         <CombatCardFooter
           name={name}
-          enchantments={enchantments}
-          abilities={abilities}
-          tinctures={tinctures}
           handleAttack={handleAttack}
         />
       </button>

@@ -1,0 +1,18 @@
+.turn-info {
+  width: 10%;
+  position: fixed;
+  bottom: 50%;
+  transform: translateY(50%);
+  left: 24px;
+  background-color: #fff;
+  padding: 12px;
+
+  &__turn, &__ap-title {
+    text-transform: capitalize;
+    margin: 0;
+  }
+
+  &__turn {
+    margin-bottom: 24px;
+  }
+}

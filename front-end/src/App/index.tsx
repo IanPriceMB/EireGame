@@ -13,10 +13,7 @@ function App(): JSX.Element {
         <Routes>
           <Route path="/" element={<Home />}>
             <Route path="cutscene" element={<Cutscene cutsceneData={sceneOne} />} />
-            <Route path="battle" element={<Battlefield />}>
-              <Route path="active" element={<Battlefield />} />
-              {/* <Route path="over" element={<BattleOverScreen/>} /> */}
-            </Route>
+            <Route path="battle" element={<Battlefield />} />
           </Route>
         </Routes>
       </Provider>

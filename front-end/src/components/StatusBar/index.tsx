@@ -3,7 +3,7 @@ import { StatusIcon, StatusIconOptions } from '../StatusIcon';
 import './index.scss';
 
 export type StatusBarProps = {
-  statuses: StatusIconOptions[]
+  statuses?: StatusIconOptions[]
 }
 
 export function StatusBar({ statuses }:StatusBarProps):JSX.Element {
@@ -13,3 +13,7 @@ export function StatusBar({ statuses }:StatusBarProps):JSX.Element {
     </div>
   );
 }
+
+StatusBar.defaultProps = {
+  statuses: undefined,
+};

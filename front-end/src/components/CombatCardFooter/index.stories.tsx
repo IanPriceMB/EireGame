@@ -18,26 +18,4 @@ export const Default = Template.bind({});
 Default.args = {
   name: 'artemis',
   handleAttack: () => console.log('attack'),
-  enchantments: [{
-    name: 'enchantment',
-    id: 'artemis-enchantment',
-    onClick: () => undefined,
-    image: `${process.env.PUBLIC_URL}/icons/enchantment.svg`,
-    apCost: 1,
-  }],
-  abilities: [{
-    name: 'ability',
-    id: 'artemis-ability',
-    onClick: () => undefined,
-    image: `${process.env.PUBLIC_URL}/icons/ability.svg`,
-    apCost: 1,
-  }],
-  tinctures: [{
-    name: 'tincture',
-    id: 'artemis-tincture',
-    onClick: () => undefined,
-    image: `${process.env.PUBLIC_URL}/icons/tincture.svg`,
-    remainingUses: 3,
-    apCost: 1,
-  }],
 };
