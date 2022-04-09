@@ -1,0 +1,55 @@
+.combat-button {
+  position: relative;
+  height: inherit;
+  width: 100%;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__button {
+    border-radius: 50%;
+    height: inherit;
+    width: inherit;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid black;
+    background-color: black;
+
+    &:hover {
+      box-shadow:
+      0 0 6px 3px #fff,  /* inner white */
+      0 0 10px 6px rgb(177, 174, 13), /* middle magenta */
+      0 0 14px 9px rgb(97, 107, 107); /* outer cyan */
+    }
+  }
+
+  &__image {
+    height: 75%;
+    width: 75%;
+  }
+
+  &__remaining-uses, &__ap-cost {
+    height: 25%;
+    width: 25%;
+    position: absolute;
+    bottom: 0;
+    border-radius: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    font-weight: bold;
+  }
+
+  &__remaining-uses {
+    left: 0;
+    background-color: lightseagreen;
+  }
+
+  &__ap-cost {
+    right: 0;
+    background-color: lightblue;
+  }
+}

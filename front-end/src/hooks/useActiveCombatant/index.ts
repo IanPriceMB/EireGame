@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  TBattler, TCharacter, TEnemy, TItem,
+  TBattler, TCharacter, TBattleNPC, TItem,
 } from '../../GlobalTypes';
 
 export type TUseActiveCombatant = {
   active: TBattler
   setAllies: React.Dispatch<React.SetStateAction<TCharacter[]>>,
-  setEnemies: React.Dispatch<React.SetStateAction<TEnemy[]>>,
+  setEnemies: React.Dispatch<React.SetStateAction<TBattleNPC[]>>,
 }
 
 export type TAttack = {
-  target: TEnemy
+  target: TBattleNPC
 }
 
 export type TUseItem = {

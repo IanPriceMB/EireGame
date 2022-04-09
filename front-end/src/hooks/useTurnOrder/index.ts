@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { TCharacter, TEnemy } from '../../GlobalTypes';
+import { TCharacter, TBattleNPC } from '../../GlobalTypes';
 
 export type TUseTurnOrderProps = {
-  combatants: (TCharacter | TEnemy)[]
+  combatants: (TCharacter | TBattleNPC)[]
 }
 
 export const useTurnOrder = ({ combatants }: TUseTurnOrderProps) => {
   const [turn, setTurn] = useState(1);
-  const [turnOrder, setTurnOrder] = useState<(TCharacter | TEnemy)[]>([]);
+  const [turnOrder, setTurnOrder] = useState<(TCharacter | TBattleNPC)[]>([]);
 
   useEffect(() => {
     // eslint-disable-next-line prefer-spread

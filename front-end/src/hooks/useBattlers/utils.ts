@@ -1,4 +1,4 @@
-import { TCharacter, TEnemy } from '../../GlobalTypes';
+import { TCharacter, TBattleNPC } from '../../GlobalTypes';
 
 export const transformCharacter = ({ character }:{ character: string}):TCharacter => ({
   name: character,
@@ -18,7 +18,7 @@ export const transformCharacter = ({ character }:{ character: string}):TCharacte
 //   atkValue: 1,
 //   healthValue: 10,
 // });
-export const transformEnemy = ({ enemy }:{ enemy: string }):TEnemy => ({
+export const transformEnemy = ({ enemy }:{ enemy: string }):TBattleNPC => ({
   name: enemy,
   picture: `/images/enemies/${enemy.toLowerCase()}.jpg`,
   altPicText: `${enemy} battle card picture`,

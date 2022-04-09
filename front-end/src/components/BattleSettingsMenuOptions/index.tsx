@@ -1,14 +1,14 @@
 import React from 'react';
-import { Button } from '../Button';
 
-export function BattleSettingsMenuOptions() {
+export function BattleSettingsMenuOptions(): JSX.Element {
   return (
     <li className="settings-menu__option">
-      <Button
+      <button
+        type="button"
         id={`${'asdf'}settings-menu-option-button`}
       >
         exit
-      </Button>
+      </button>
     </li>
   );
 }

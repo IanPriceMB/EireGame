@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '../Button';
 import './index.scss';
 
 export type TCutsceneTextBox = {
@@ -12,7 +11,7 @@ export function CutsceneTextBox({
   dialogue,
   nameplate,
   handleNextButton,
-}:TCutsceneTextBox) {
+}:TCutsceneTextBox): JSX.Element {
   return (
     <div className="cutscene-textbox">
       <div className="cutscene-textbox__name-plate">
@@ -22,7 +21,7 @@ export function CutsceneTextBox({
         {dialogue}
       </div>
       {handleNextButton && (
-        <Button
+        <button
           type="button"
           name="next"
           onClick={handleNextButton}
@@ -30,7 +29,7 @@ export function CutsceneTextBox({
           data-testid="cutscene-textbox__next-button"
         >
           Next
-        </Button>
+        </button>
       )}
     </div>
   );

@@ -1,0 +1,46 @@
+// margin & padding sizes
+$space-miniscule: 2px;
+$space-tiny: 4px;
+$space-little: 8px;
+$space-small: 12px;
+$space-medium: 24px;
+$space-large: 36px;
+$space-huge: 48px;
+
+// width and height sizes
+$size-small: 24px;
+$size-medium: 36px;
+$size-large: 50px;
+$size-huge: 75px;
+$size-enormous: 100px;
+
+// colors
+$color-background: #fff;
+$color-border: black;
+
+
+// border 
+$border: 1px solid $color-border;
+
+// width & height presets
+@mixin size-inherit {
+  width: inherit;
+  height: inherit;
+}
+@mixin max-size-inherit {
+  max-width: inherit;
+  max-height: inherit;
+}
+
+//flex
+@mixin horFlex {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+@mixin colFlex {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { TEnemy, TItem } from '../../GlobalTypes';
+import { TBattleNPC, TItem } from '../../GlobalTypes';
 import { TAttack, TUseItem } from '../../hooks';
-import { Button } from '../Button';
 import './index.scss';
 
 export type TBattleMenuProps = {
@@ -17,63 +16,64 @@ export type TBattleMenuProps = {
     },
   },
   items: TItem[] | undefined,
-  enemies: TEnemy[] | undefined,
+  enemies: TBattleNPC[] | undefined,
 }
 
 export function BattleMenu({
   menuConfig,
   items,
   enemies,
-}: TBattleMenuProps) {
+}: TBattleMenuProps): JSX.Element {
   const [menuState, setMenuState] = useState('');
 
-  const attackSelect = () => setMenuState('attack');
-  const itemSelect = () => setMenuState('item');
+  const attackSelect = ():void => setMenuState('attack');
+  const itemSelect = ():void => setMenuState('item');
 
   return (
     <div className="battle-menu">
       <div className="battle-menu__main">
         {menuConfig.attack && (
-          <Button
+          <button
             type="button"
             className="battle-menu__button"
             onClick={attackSelect}
           >
             Attack
-          </Button>
+          </button>
         )}
         {menuConfig.defend && (
-          <Button
+          <button
             type="button"
             className="battle-menu__button"
             onClick={menuConfig.defend.onClick}
           >
             Defend
-          </Button>
+          </button>
         )}
         {menuConfig.item && (
-          <Button
+          <button
             type="button"
             className="battle-menu__button"
             onClick={itemSelect}
           >
             Item
-          </Button>
+          </button>
         )}
       </div>
       <div className="battle-menu__submenu">
         {/* eslint-disable-next-line no-nested-ternary */}
         {menuState === 'attack' ? (
           <ul className="attack-menu">
-            {enemies?.map((enemy:TEnemy) => (
+            {enemies?.map((enemy:TBattleNPC) => (
               <li className="attack-menu__item">
-                <Button
+                <button
+                  type="button"
                   onClick={() => menuConfig.attack?.onClick({ target: enemy })}
                   className="attack-menu__item-button"
                   id={`${enemy.name}-attack-button`}
                 >
                   {enemy.name}
-                </Button>
+                </button>
               </li>
             ))}
           </ul>
@@ -81,13 +81,14 @@ export function BattleMenu({
           <ul className="item-menu">
             {items?.map((item:TItem) => (
               <li className="item-menu__item">
-                <Button
+                <button
+                  type="button"
                   onClick={() => menuConfig.item?.onClick({ item })}
                   className="item-menu__item-button"
                   id={`${item.name}-item-button`}
                 >
                   {item.name}
-                </Button>
+                </button>
               </li>
             ))}
           </ul>

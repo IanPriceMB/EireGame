@@ -2,13 +2,14 @@ import React from 'react';
 import {
   Outlet, Routes, Route,
 } from 'react-router-dom';
-import { BattleSettingsMenuOptions, SettingsMenu } from '../../components';
+import { BattleSettingsMenuOptions, HomeSettingsMenuOptions, SettingsMenu } from '../../components';
 
-export function Home() {
+export function Home(): JSX.Element {
   return (
     <div className="home">
       <Routes>
         <Route path="/" element={<SettingsMenu />}>
+          <Route index element={<HomeSettingsMenuOptions />} />
           <Route path="battle" element={<BattleSettingsMenuOptions />} />
           {/* <Route path="cutscene" element={<CutseneSettingsMenuOptions />} /> */}
         </Route>

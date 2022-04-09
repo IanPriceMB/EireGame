@@ -8,7 +8,7 @@ type TCutsceneProps = {
   cutsceneData: TCutsceneData
 }
 
-export function Cutscene({ cutsceneData }:TCutsceneProps) {
+export function Cutscene({ cutsceneData }:TCutsceneProps): JSX.Element {
   const {
     dialogue, background, speakerInfo, handleNext,
   } = useCutscene({ cutsceneData });

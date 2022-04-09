@@ -6,7 +6,7 @@ export type TTalkingHeadProps = {
   altFaceText: string,
 }
 
-export function TalkingHead({ face, altFaceText }: TTalkingHeadProps) {
+export function TalkingHead({ face, altFaceText }: TTalkingHeadProps): JSX.Element {
   return (
     <div
       className="talking-head"

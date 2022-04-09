@@ -1,0 +1,46 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  min-width: inherit;
+
+  &__name-plate {
+    margin-top: 0;
+    font-weight: bold;
+    text-align: left;
+    margin: 4px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
+    width: calc(100% - 8px);
+    overflow: hidden;
+  }
+
+  &__health {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: inherit;
+    max-width: 45%;
+    transform: translateX(50%);
+  }
+
+  &__health-svg {
+    max-width: 100%;
+    position: absolute;
+  }
+
+  &__current-health, &__max-health {
+    position: relative;
+    z-index: 2;
+  }
+  &__current-health {
+    &::after {
+      content: '/';
+    }
+  }
+}

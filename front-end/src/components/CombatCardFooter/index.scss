@@ -1,0 +1,32 @@
+.quick-action-menu {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content:  space-between;
+  align-items: center;
+  position:absolute;
+  bottom: 4px;
+  left: 0;
+  height: 33%;
+  width: 100%;
+
+  > * {
+    flex-basis: 1;
+    flex-grow: 1;
+  }
+
+  &__quick-attack {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__quick-action-grid {
+    display: flex;
+    flex-flow: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 100%;
+  }
+}

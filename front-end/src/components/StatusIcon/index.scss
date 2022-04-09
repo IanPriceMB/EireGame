@@ -1,0 +1,23 @@
+.status-icon {
+  height: 100%;
+  position: relative;
+
+  &__image {
+    height: inherit;
+    width: inherit;
+    max-height: inherit;
+    max-width: inherit;
+  }
+
+  &__tool-tip {
+    visibility: hidden;
+    position: absolute;
+    bottom: 100%;
+    left: 75%;
+    padding: 4px;
+    background-color: #fff;
+  }
+  &:hover &__tool-tip {
+    visibility: visible;
+  }
+}

@@ -1,4 +1,4 @@
-export type TEnemy = {
+export type TBattleNPC = {
   name: string,
   picture: string,
   altPicText: string,
@@ -11,7 +11,7 @@ export type TItem = {
   name: string
 }
 
-export type TCharacter = TEnemy & {
+export type TCharacter = TBattleNPC & {
   experiencePoints: number,
   level: number,
   spells: TSpell[]
@@ -22,6 +22,6 @@ export type TSpell = {
   effect: () => void,
 }
 
-export type TTurnOrder = (TCharacter | TEnemy)[]
+export type TTurnOrder = (TCharacter | TBattleNPC)[]
 
-export type TBattler = (TCharacter | TEnemy)
+export type TBattler = (TCharacter | TBattleNPC)

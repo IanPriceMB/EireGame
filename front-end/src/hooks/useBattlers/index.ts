@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TBattleData } from '../../battles/types';
-import { TCharacter, TEnemy } from '../../GlobalTypes';
+import { TCharacter, TBattleNPC } from '../../GlobalTypes';
 import { transformCharacter, transformEnemy } from './utils';
 
 export type TUseBattlers = {
@@ -9,7 +9,7 @@ export type TUseBattlers = {
 
 export const useBattlers = ({ battleData }:TUseBattlers) => {
   const [allies, setAllies] = useState<TCharacter[]>([]);
-  const [enemies, setEnemies] = useState<TEnemy[]>([]);
+  const [enemies, setEnemies] = useState<TBattleNPC[]>([]);
 
   useEffect(() => {
     const battleReadyCharacters = battleData.characters.map(
