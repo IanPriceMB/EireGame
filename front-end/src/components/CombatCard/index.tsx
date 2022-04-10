@@ -1,32 +1,47 @@
-import React, { useMemo } from 'react';
-import { CombatCardFooter, CombatCardFooterProps } from '../CombatCardFooter';
-import { CombatCardHeader, CombatCardHeaderProps } from '../CombatCardHeader';
-import { StatusBar, StatusBarProps } from '../StatusBar';
+import React, { ComponentProps, useMemo } from 'react';
+import { CombatAction, Combatant } from '../../GlobalTypes';
+import { CombatCardFooter } from '../CombatCardFooter';
+import { CombatCardHeader } from '../CombatCardHeader';
+import { StatusBar } from '../StatusBar';
 import './index.scss';
 
-export type CombatCardProps = StatusBarProps & CombatCardHeaderProps & CombatCardFooterProps & {
-  onCardSelect: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    state: StatusBarProps & CombatCardHeaderProps,
-  ) => void,
+export interface CombatCardProps extends Omit<ComponentProps<'button'>, 'name'|'key'>, Combatant {
+    onCardSelect: (
+      e: React.MouseEvent<HTMLButtonElement>,
+      state: Omit<Combatant, 'attack'>,
+    ) => void,
+    handleClick?: () => void,
+    attack?: CombatAction,
 }
 
-export function CombatCard({
+export const CombatCard:React.FC<CombatCardProps> = ({
   statuses,
+  key,
   name,
   currentHealth,
   maxHealth,
-  handleAttack,
   onCardSelect,
-  apCost,
-  remainingUses,
-}:CombatCardProps): JSX.Element {
+  attack,
+  handleClick,
+  ...rest
+}): JSX.Element => {
   const fullArtSrc = useMemo(
     () => ((name === 'artemis' || name === 'saoirse')
       ? `${process.env.PUBLIC_URL}/images/expressions/${name}/${name}.png`
       : `${process.env.PUBLIC_URL}/images/enemies/${name}.jpg`),
     [name],
   );
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>):void => {
+    // e.stopPropagation();
+    onCardSelect(e, {
+      statuses,
+      key,
+      name,
+      currentHealth,
+      maxHealth,
+    });
+  };
 
   return (
     <div className="combat-card">
@@ -35,14 +50,10 @@ export function CombatCard({
         className="combat-card__body"
         data-testid="combat-card__body"
         type="button"
-        onClick={(e) => onCardSelect(e, {
-          statuses,
-          name,
-          currentHealth,
-          maxHealth,
-        })}
-        id={`${name}CombatCard`}
-        name={`${name}CombatCard`}
+        onClick={onClick}
+        id={`${key}CombatCard`}
+        name={`${key}CombatCard`}
+        {...rest}
       >
         <CombatCardHeader name={name} maxHealth={maxHealth} currentHealth={currentHealth} />
         <img
@@ -50,20 +61,14 @@ export function CombatCard({
           alt={`${name} full art`}
           className="combat-card__full-art"
         />
-        <CombatCardFooter
-          name={name}
-          handleAttack={handleAttack}
-          apCost={apCost}
-          remainingUses={remainingUses}
-        />
+        {attack && <CombatCardFooter {...attack} handleClick={handleClick} />}
       </button>
     </div>
   );
-}
+};
 
 CombatCard.defaultProps = {
   statuses: undefined,
-  enchantments: undefined,
-  abilities: undefined,
-  tinctures: undefined,
+  handleClick: undefined,
+  attack: undefined,
 };

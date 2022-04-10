@@ -17,6 +17,7 @@ const Template: Story<BattlefieldRowProps> = (args) => (
       maxHealth={20}
       handleAttack={() => console.log('attack')}
       onCardSelect={() => console.log('selected')}
+      key="saoirse"
     />
   </BattlefieldRow>
 );

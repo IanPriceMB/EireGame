@@ -1,27 +1,31 @@
-export type TBattleNPC = {
+export type StatusOption = 'poison' | 'dazed'
+
+export type CombatAction = {
   name: string,
-  picture: string,
-  altPicText: string,
-  atkValue: number,
-  healthValue: number,
-  enemyFlag: boolean,
+  id: string,
+  damage?: number,
+  handleClick: (cb: (name: string) => void) => void,
+  image: string,
+  apCost?: number,
+  remainingUses?: number
 }
 
-export type TItem = {
-  name: string
-}
-
-export type TCharacter = TBattleNPC & {
-  experiencePoints: number,
-  level: number,
-  spells: TSpell[]
-}
-
-export type TSpell = {
+export interface Combatant extends Record<string, unknown> {
+  statuses?: StatusOption[];
   name: string;
-  effect: () => void,
+  key: string;
+  currentHealth: number;
+  maxHealth: number;
+  attack?: CombatAction;
 }
 
-export type TTurnOrder = (TCharacter | TBattleNPC)[]
+export interface Enemy extends Combatant {
+  enchantments?: CombatAction[],
+  abilities?: CombatAction[],
+}
 
-export type TBattler = (TCharacter | TBattleNPC)
+export interface Ally extends Enemy {
+  tinctures?: CombatAction[],
+}
+
+export type Characters = 'Artemis' | 'Saoirse' | 'Bea' | 'Mordred' | 'Spacey' | 'Grania' | 'Fang'

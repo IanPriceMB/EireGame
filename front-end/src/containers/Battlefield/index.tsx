@@ -1,39 +1,18 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  CombatCardFooterProps,
-  CombatCardHeaderProps,
   SelectedDetails,
   SpellOptionsModal,
-  SpellOptionsModalProps,
-  StatusBarProps,
-  StatusIconOptions,
 } from '../../components';
 import { BattlefieldRow } from '../../components/BattlefieldRow';
 import { CombatCard } from '../../components/CombatCard';
 import { TurnInfo } from '../../components/TurnInfo';
+import {
+  Ally, CombatAction, Combatant, Enemy, StatusOption,
+} from '../../GlobalTypes';
 import { randomZeroToXWhole } from '../../utils';
 import './index.scss';
 
-export type Ally = Omit<SpellOptionsModalProps, 'onCardSelect' | 'handleBack'> & {
-  attack: Omit<CombatCardFooterProps, 'name' | 'handleAttack'> & {
-    handleAttack: (cb:(name:string)=> void) => void
-    damage: number
-  },
-  [key:string]: any
-}
-
-export type Enemy = { [key:string]: any } & {
-  name: string,
-  currentHealth: number,
-  maxHealth: number,
-  key: string,
-  attack: {
-    apCost: number,
-    damage: number,
-    handleAttack: (cb:(name:string)=> void) => void
-  }
-}
 const enemiesData = [{
   name: 'selkie',
   key: 'selkie1',
@@ -42,11 +21,14 @@ const enemiesData = [{
   attack: {
     apCost: 2,
     damage: 1,
-    handleAttack: (cb) => cb('selkie1'),
+    handleClick: (cb) => cb('selkie1'),
+    id: 'artemisAttack',
+    name: 'attack',
+    image: `${process.env.PUBLIC_URL}/icons/meleeAttack.svg`,
   },
 }] as Enemy[];
 const alliesData = [{
-  statuses: ['poison'] as StatusIconOptions[],
+  statuses: ['poison'] as StatusOption[],
   name: 'artemis',
   key: 'artemis',
   currentHealth: 20,
@@ -76,7 +58,10 @@ const alliesData = [{
   attack: {
     apCost: 1,
     damage: 2,
-    handleAttack: (cb) => cb('artemis'),
+    handleClick: (cb) => cb('artemis'),
+    id: 'artemisAttack',
+    name: 'attack',
+    image: `${process.env.PUBLIC_URL}/icons/meleeAttack.svg`,
   },
 }] as Ally[];
 export function Battlefield():JSX.Element {
@@ -107,10 +92,11 @@ export function Battlefield():JSX.Element {
 
   const handleTargetSelect = useCallback((
     e?: React.MouseEvent<HTMLButtonElement>,
-    state?: StatusBarProps & CombatCardHeaderProps,
+    state?: Omit<Combatant, 'attack'>,
   ):void => {
     if (!activeSkill || !active) return;
-    const { damage, apCost } = active[activeSkill];
+    const { damage, apCost } = active[activeSkill] as CombatAction;
+    if (!damage || !apCost) return;
     if (isPlayerTurn && state) {
       const enemy = enemies.find((en) => en.name === state.name);
       if (!enemy) return;
@@ -140,7 +126,7 @@ export function Battlefield():JSX.Element {
   useEffect(() => {
     if (!isPlayerTurn) {
       const enemy = enemies[randomZeroToXWhole(enemies.length - 1)];
-      enemy.attack.handleAttack(handleAttack);
+      enemy.attack?.handleClick(handleAttack);
     }
   }, [enemies, handleAttack, isPlayerTurn]);
 
@@ -165,7 +151,7 @@ export function Battlefield():JSX.Element {
 
   const handleAllyCardSelect = useCallback((
     e: React.MouseEvent<HTMLButtonElement>,
-    state: StatusBarProps & CombatCardHeaderProps,
+    state: Omit<Combatant, 'attack'>,
   ):void => {
     const ally = allies.find((a) => a.name === state.name);
     setActive(ally);
@@ -176,7 +162,7 @@ export function Battlefield():JSX.Element {
 
   const handleEnemyCardSelect = useCallback((
     e: React.MouseEvent<HTMLButtonElement>,
-    state: StatusBarProps & CombatCardHeaderProps,
+    state: Omit<Combatant, 'attack'>,
   ):void => {
     const enemy = enemies.find((en) => en.name === state.name);
     setSelected(enemy);
@@ -203,14 +189,14 @@ export function Battlefield():JSX.Element {
             name={ally.name}
             currentHealth={ally.currentHealth}
             maxHealth={ally.maxHealth}
-            {...ally.attack}
-            handleAttack={() => ally.attack.handleAttack(handleAttack)}
+            attack={ally.attack}
+            handleAttack={() => ally.attack?.handleClick(handleAttack)}
             onCardSelect={handleAllyCardSelect}
           />
         ))}
       </BattlefieldRow>
       <TurnInfo remainingAP={remainingAP} isPlayerTurn={isPlayerTurn} />
-      <SelectedDetails {...selected} />
+      {selected && <SelectedDetails {...selected} />}
       <img
         src={`${process.env.PUBLIC_URL}${terrain}`}
         alt="background terrain"
@@ -218,12 +204,16 @@ export function Battlefield():JSX.Element {
       />
       {active && (
         <SpellOptionsModal
-          {...active}
-          {...active.attack}
-          handleAttack={() => active.attack.handleAttack(handleAttack)}
+          // {...active}
+          attack={active.attack}
+          handleAttack={() => active.attack?.handleClick(handleAttack)}
           onCardSelect={() => null}
           handleBack={isPlayerTurn ? handleBack : undefined}
           isOpen={isBattleOptionsOpen}
+          key={active.key}
+          name={active.name}
+          currentHealth={active.currentHealth}
+          maxHealth={active.maxHealth}
         />
       )}
     </div>

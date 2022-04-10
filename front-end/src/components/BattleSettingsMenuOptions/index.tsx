@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export function BattleSettingsMenuOptions(): JSX.Element {
+export const BattleSettingsMenuOptions:React.FC<Record<string, unknown>> = (): JSX.Element => {
   const navigate = useNavigate();
   return (
     <li className="settings-menu__option">
@@ -14,4 +14,4 @@ export function BattleSettingsMenuOptions(): JSX.Element {
       </button>
     </li>
   );
-}
+};

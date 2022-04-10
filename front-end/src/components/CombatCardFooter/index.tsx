@@ -1,38 +1,23 @@
 import React from 'react';
+import { CombatAction } from '../../GlobalTypes';
 import {
-  CombatButton, CombatButtonState,
+  CombatButton,
 } from '../CombatButton';
 import './index.scss';
 
-export type CombatCardFooterProps = Omit<CombatButtonState, 'id'> & {
-  handleAttack?: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    state: CombatButtonState
-  ) => void
+export interface CombatCardFooterProps extends Omit<CombatAction, 'handleClick'> {
+  handleClick?: () => void
 }
 
-export function CombatCardFooter({
-  name,
-  handleAttack,
-  apCost,
-  remainingUses,
-}:CombatCardFooterProps):JSX.Element {
-  return (
-    <footer className="combat-card-footer">
-      {handleAttack && (
-        <CombatButton
-          name="attack"
-          id={`${name}AttackButton`}
-          handleClick={handleAttack}
-          image={`${process.env.PUBLIC_URL}/icons/meleeAttack.svg`}
-          apCost={apCost}
-          remainingUses={remainingUses}
-        />
-      )}
-    </footer>
-  );
-}
+export const CombatCardFooter:React.FC<CombatCardFooterProps> = ({
+  handleClick,
+  ...rest
+}):JSX.Element => (
+  <footer className="combat-card-footer">
+    <CombatButton handleClick={handleClick} {...rest} />
+  </footer>
+);
 
 CombatCardFooter.defaultProps = {
-  handleAttack: undefined,
+  handleClick: undefined,
 };

@@ -8,15 +8,14 @@ export type BattlefieldRowProps = {
   children?: JSX.Element | JSX.Element[]
 }
 
-export function BattlefieldRow({
-  type, children,
-}: BattlefieldRowProps): JSX.Element {
-  return (
-    <div className={['battlefield-row', `battlefield-row__${type}`].join(' ')}>
-      {children}
-    </div>
-  );
-}
+export const BattlefieldRow:React.FC<BattlefieldRowProps> = ({
+  type,
+  children,
+}): JSX.Element => (
+  <div className={['battlefield-row', `battlefield-row__${type}`].join(' ')}>
+    {children}
+  </div>
+);
 
 BattlefieldRow.defaultProps = {
   children: undefined,

@@ -1,29 +1,40 @@
 import React from 'react';
-import { CombatCard, CombatCardProps } from '../CombatCard';
-import { QuickActionsGrid, QuickActionsGridProps } from '../QuickActionsGrid';
+import { Ally, CombatAction, Combatant } from '../../GlobalTypes';
+import { CombatCard } from '../CombatCard';
+import { QuickActionsGrid } from '../QuickActionsGrid';
 import './index.scss';
 
-export type SpellOptionsModalProps = CombatCardProps
-  & QuickActionsGridProps & {
-    handleBack?: () => void,
-    isOpen?: boolean
-  }
+export interface SpellOptionsModalProps extends
+  Omit<Ally, 'enchantments'|'abilities'|'tinctures'>, Combatant {
+  onCardSelect: () => void,
+  enchantments?:Omit<CombatAction, 'handleClick'>[] & {
+    handleClick: () => void
+  }[],
+  abilities?:Omit<CombatAction, 'handleClick'>[] & {
+    handleClick: () => void
+  }[],
+  tinctures?:Omit<CombatAction, 'handleClick'>[] & {
+    handleClick: () => void
+  }[],
+  handleBack?: () => void,
+  attack?: CombatAction
+}
 
-export function SpellOptionsModal({
+export const SpellOptionsModal: React.FC<SpellOptionsModalProps> = ({
   statuses,
   name,
   currentHealth,
   maxHealth,
   handleAttack,
-  apCost,
-  remainingUses,
+  attack,
   onCardSelect,
   enchantments,
   abilities,
   tinctures,
   handleBack,
   isOpen,
-}:SpellOptionsModalProps):JSX.Element | null {
+  key,
+}):JSX.Element | null => {
   if (!isOpen) return null;
   return (
     <div className="spell-options-modal">
@@ -35,8 +46,8 @@ export function SpellOptionsModal({
           maxHealth={maxHealth}
           handleAttack={handleAttack}
           onCardSelect={onCardSelect}
-          apCost={apCost}
-          remainingUses={remainingUses}
+          attack={attack}
+          key={key}
         />
         <div className="spell-options-modal__quick-actions">
           <h1 className="spell-options-modal__quick-title">Quick Actions</h1>
@@ -61,9 +72,13 @@ export function SpellOptionsModal({
       <div className="spell-options-modal__screen" />
     </div>
   );
-}
+};
 
 SpellOptionsModal.defaultProps = {
   isOpen: false,
   handleBack: undefined,
+  enchantments: undefined,
+  abilities: undefined,
+  tinctures: undefined,
+  attack: undefined,
 };

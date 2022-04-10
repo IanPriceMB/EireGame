@@ -1,18 +1,17 @@
 import React from 'react';
-import { StatusIcon, StatusIconOptions } from '../StatusIcon';
+import { StatusOption } from '../../GlobalTypes';
+import { StatusIcon } from '../StatusIcon';
 import './index.scss';
 
 export type StatusBarProps = {
-  statuses?: StatusIconOptions[]
+  statuses?: StatusOption[]
 }
 
-export function StatusBar({ statuses }:StatusBarProps):JSX.Element {
-  return (
-    <div className="status-bar">
-      {statuses && statuses.map((status) => <StatusIcon key={status} status={status} />)}
-    </div>
-  );
-}
+export const StatusBar:React.FC<StatusBarProps> = ({ statuses }):JSX.Element => (
+  <div className="status-bar">
+    {statuses && statuses.map((status) => <StatusIcon key={status} status={status} />)}
+  </div>
+);
 
 StatusBar.defaultProps = {
   statuses: undefined,

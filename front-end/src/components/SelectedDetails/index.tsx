@@ -1,17 +1,14 @@
 import React from 'react';
+import { Combatant } from '../../GlobalTypes';
 import './index.scss';
 
-export type SelectedDetailsProps = {
-  name?: string,
-  currentHealth?: number,
-  maxHealth?: number,
-}
+export type SelectedDetailsProps = Pick<Combatant, 'name'|'currentHealth'|'maxHealth'>
 
-export function SelectedDetails({
+export const SelectedDetails:React.FC<SelectedDetailsProps> = ({
   name,
   currentHealth,
   maxHealth,
-}:SelectedDetailsProps):JSX.Element | null {
+}):JSX.Element | null => {
   if (!name) return null;
   return (
     <div className="selected-details">
@@ -29,7 +26,7 @@ export function SelectedDetails({
       </div>
     </div>
   );
-}
+};
 
 SelectedDetails.defaultProps = {
   name: undefined,

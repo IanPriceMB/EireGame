@@ -17,5 +17,5 @@ const Template: Story<CombatCardFooterProps> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   name: 'artemis',
-  handleAttack: () => console.log('attack'),
+  handleClick: () => console.log('attack'),
 };

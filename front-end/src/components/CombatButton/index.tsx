@@ -1,28 +1,13 @@
 import React, { ComponentProps } from 'react';
+import { CombatAction } from '../../GlobalTypes';
 import './index.scss';
 
-export type SizeOptions = 'tiny' | 'small' | 'medium' | 'big' | 'large' | 'enormous'
-
-export type CombatButtonState = {
-  remainingUses?: number,
-  apCost?: number,
-  name: string,
-  id: string
+export interface CombatButtonProps extends
+  Omit<ComponentProps<'button'>, 'name'|'id'>, Omit<CombatAction, 'handleClick'> {
+    handleClick?: () => void
 }
 
-export interface CombatButtonExtras extends Omit<ComponentProps<'button'>, 'name'> {
-  id: string,
-  handleClick?: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    state: CombatButtonState
-  ) => void,
-  image: string,
-  name: string,
-}
-
-export type CombatButtonProps = CombatButtonExtras & CombatButtonState
-
-export function CombatButton({
+export const CombatButton:React.FC<CombatButtonProps> = ({
   name,
   id,
   handleClick,
@@ -30,17 +15,10 @@ export function CombatButton({
   remainingUses,
   apCost,
   ...rest
-}: CombatButtonProps):JSX.Element {
+}):JSX.Element => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>):void => {
     e.stopPropagation();
-    if (handleClick) {
-      handleClick(e, {
-        name,
-        remainingUses,
-        apCost,
-        id,
-      });
-    }
+    if (handleClick) handleClick();
   };
 
   return (
@@ -83,7 +61,7 @@ export function CombatButton({
       )}
     </div>
   );
-}
+};
 
 CombatButton.defaultProps = {
   remainingUses: undefined,
