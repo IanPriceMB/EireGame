@@ -1,10 +1,10 @@
 import {
-  useState, useCallback, useEffect, Dispatch, SetStateAction, useMemo,
+  useState, useEffect, Dispatch, SetStateAction,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ActiveAbility,
-  Ally, Characters, CombatAction, Combatant, Enemy, StatusOption,
+  Ally, Combatant, Enemy,
 } from '../../GlobalTypes';
 
 export interface CombatSchematics {
@@ -32,55 +32,7 @@ export function useCombatSystem():CombatSchematics {
     maxHealth: 10,
     isEnemy: true,
   }]);
-  const [allies, setAllies] = useState<Ally[]>([{
-    statuses: ['poison'] as StatusOption[],
-    name: 'artemis',
-    key: 'artemis',
-    currentHealth: 20,
-    isEnemy: false,
-    maxHealth: 20,
-    oghams: [{
-      name: 'fire arrow',
-      id: 'artemis-fireArrow',
-      handleClick: () => undefined,
-      image: `${process.env.PUBLIC_URL}/icons/enchantment.svg`,
-      apCost: 1,
-      identifier: Characters.Artemis,
-    },
-    {
-      name: 'ice arrow',
-      id: 'artemis-iceArrow',
-      handleClick: () => undefined,
-      image: `${process.env.PUBLIC_URL}/icons/enchantment.svg`,
-      apCost: 1,
-      identifier: Characters.Artemis,
-    },
-    {
-      name: 'dark arrow',
-      id: 'artemis-darkArrow',
-      handleClick: () => undefined,
-      image: `${process.env.PUBLIC_URL}/icons/enchantment.svg`,
-      apCost: 1,
-      identifier: Characters.Artemis,
-    }],
-    abilities: [{
-      name: 'ability',
-      id: 'artemis-ability',
-      handleClick: () => undefined,
-      image: `${process.env.PUBLIC_URL}/icons/ability.svg`,
-      apCost: 1,
-      identifier: Characters.Artemis,
-    }],
-    tinctures: [{
-      name: 'tincture',
-      id: 'artemis-tincture',
-      handleClick: () => undefined,
-      image: `${process.env.PUBLIC_URL}/icons/tincture.svg`,
-      remainingUses: 3,
-      apCost: 1,
-      identifier: Characters.Artemis,
-    }],
-  }]);
+  const [allies, setAllies] = useState<Ally[]>([]);
   const [isPlayerTurn, setPlayerTurn] = useState(false);
   const [remainingAP, setRemainingAP] = useState(10);
   const [inTargetingMode, setTargetingMode] = useState(false);

@@ -1,13 +1,12 @@
 import React from 'react';
-import {
-  SelectedDetails,
-} from '../../components';
 import { BattlefieldRow } from '../../components/BattlefieldRow';
 import { CombatCard } from '../../components/CombatCard';
 import { TurnInfo } from '../../components/TurnInfo';
-import { Ally, Enemy } from '../../GlobalTypes';
+import { Enemy } from '../../GlobalTypes';
 import { useCombatSystem } from '../../hooks';
-import { BattleCharacter } from '../BattleCharacter';
+import { BattleReadyArtemis } from '../BattleReadyArtemis';
+import { BattleReadyFang } from '../BattleReadyFang';
+import { BattleReadySaoirse } from '../BattleReadySaoirse';
 import './index.scss';
 
 export function Battlefield():JSX.Element {
@@ -16,11 +15,8 @@ export function Battlefield():JSX.Element {
     remainingAP,
     isPlayerTurn,
     enemies,
-    activeAbility,
     setActiveAbility,
     inTargetingMode,
-    setTargetingMode,
-    target,
     setTarget,
     resolution,
   } = useCombatSystem();
@@ -36,12 +32,21 @@ export function Battlefield():JSX.Element {
         ))}
       </BattlefieldRow>
       <BattlefieldRow type="ally">
-        <BattleCharacter
+        <BattleReadyArtemis
           inTargetingMode={inTargetingMode}
-          setTargetingMode={setTargetingMode}
-          activeAbility={activeAbility}
           setActiveAbility={setActiveAbility}
-          target={target}
+          setTarget={setTarget}
+          resolution={resolution}
+        />
+        <BattleReadySaoirse
+          inTargetingMode={inTargetingMode}
+          setActiveAbility={setActiveAbility}
+          setTarget={setTarget}
+          resolution={resolution}
+        />
+        <BattleReadyFang
+          inTargetingMode={inTargetingMode}
+          setActiveAbility={setActiveAbility}
           setTarget={setTarget}
           resolution={resolution}
         />

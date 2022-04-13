@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export type StatusOption = 'poison' | 'dazed'
 
 export type CombatActionClick = (
@@ -38,6 +40,12 @@ export interface Enemy extends Combatant {
 
 export interface Ally extends Enemy {
   tinctures?: CombatAction[],
+  attackConfig: CombatAction
+  handleBack?: () => void,
+  isOpen?: boolean;
+  onCardSelect: CardSelect,
+  inTargetingMode: boolean,
+  handleCancel: () => void
 }
 
 export enum Characters {
@@ -48,4 +56,25 @@ export enum Characters {
   'Spacey' = 'spacey',
   'Grania' = 'grania',
   'Fang' = 'fang',
+}
+
+export type CharacterData = {
+  statuses?: StatusOption[]
+  name: Characters;
+  key: Characters,
+  currentHealth: number;
+  maxHealth: number;
+  isEnemy: boolean,
+  oghams: string[];
+  abilities: string[];
+  tinctures: string[];
+  attackIcon: string
+}
+
+export type BattleCharacterProps = {
+  inTargetingMode: boolean,
+  setActiveAbility: Dispatch<SetStateAction<ActiveAbility>>,
+  setTarget: Dispatch<SetStateAction<Combatant | undefined>>,
+  resolution?: Combatant,
+  characterData: CharacterData
 }
