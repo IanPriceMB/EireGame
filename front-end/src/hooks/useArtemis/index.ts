@@ -1,9 +1,9 @@
 import React, {
-  useState, useCallback, Dispatch, SetStateAction,
+  useState, useCallback, Dispatch, SetStateAction, useMemo, useEffect,
 } from 'react';
 import {
   ActiveAbility,
-  CardSelect, Characters, CombatAction, CombatActionClick,
+  CardSelect, Characters, CombatAction, CombatActionClick, Combatant,
 } from '../../GlobalTypes';
 
 export type AttackProps = {
@@ -30,8 +30,11 @@ export interface Artemis {
 type useCharacterProps = {
   inTargetingMode: boolean,
   setTargetingMode: Dispatch<SetStateAction<boolean>>,
-  activeAbility: ActiveAbility,
+  activeAbility?: ActiveAbility,
   setActiveAbility: Dispatch<SetStateAction<ActiveAbility>>,
+  target?: Combatant,
+  resolution?: Combatant,
+  setTarget: Dispatch<SetStateAction<Combatant | undefined>>,
 }
 
 export function useArtemis({
@@ -39,58 +42,71 @@ export function useArtemis({
   setTargetingMode,
   activeAbility,
   setActiveAbility,
+  target,
+  setTarget,
+  resolution,
 }:useCharacterProps):Artemis {
   const [currentHealth, setCurrentHealth] = useState(10);
   const [maxHealth, setMaxHealth] = useState(20);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-  const oghamsList = ['Oak', 'Rowan', 'Aspen'];
-  const abilitiesList = ['Dark Arrow', 'Gadget Trap'];
-  const tincturesList = ['Potion'];
-  const name = Characters.Artemis;
-  const key = Characters.Artemis;
-  const isEnemy = false;
+  const oghamsList = useMemo(() => ['Oak', 'Rowan', 'Aspen'], []);
+  const abilitiesList = useMemo(() => ['Dark Arrow', 'Gadget Trap'], []);
+  const tincturesList = useMemo(() => ['Potion'], []);
+  const name = useMemo(() => Characters.Artemis, []);
+  const key = useMemo(() => Characters.Artemis, []);
+  const isEnemy = useMemo(() => false, []);
 
-  const handleCancel = ():void => setTargetingMode(false);
+  const handleCancel = useCallback(():void => setActiveAbility(undefined), [setActiveAbility]);
 
-  const handleBack = ():void => setIsOptionsOpen(false);
+  const handleBack = useCallback(():void => setIsOptionsOpen(false), []);
 
-  const handleActionButton: CombatActionClick = (e, state) => {
-    e.stopPropagation();
+  useEffect(() => {
+    if (resolution) {
+      if (resolution.name === Characters.Artemis) {
+        setCurrentHealth(resolution.currentHealth);
+      }
+    }
+  }, [resolution]);
+
+  const handleActionButton: CombatActionClick = useCallback((e, state) => {
     setActiveAbility(state);
     setIsOptionsOpen(false);
-    setTargetingMode(true);
-  };
+  }, [setActiveAbility]);
 
-  const onCardSelect: CardSelect = (e, state) => {
+  const onCardSelect: CardSelect = useCallback((e, state) => {
     setIsOptionsOpen(true);
-  };
+  }, []);
 
-  const onTargetSelect: CardSelect = (e, state) => {
+  const onTargetSelect: CardSelect = useCallback((e, state) => {
+    setTarget(state);
     setIsOptionsOpen(false);
-    setTargetingMode(false);
-    console.log(state);
-  };
+  }, [setTarget]);
 
-  const actionConfigTransform = (string:string, icon:string):CombatAction => ({
+  const actionConfigTransform = useCallback((string:string, icon:string):CombatAction => ({
     name: string,
     id: `${Characters.Artemis}${string.replace(/\s/g, '')}`,
     image: `${process.env.PUBLIC_URL}/icons/${icon}.svg`,
     apCost: 1,
     handleClick: handleActionButton,
     identifier: Characters.Artemis,
-  });
+  }), [handleActionButton]);
 
-  const attackConfig = actionConfigTransform('attack', 'rangedAttack');
+  const attackConfig = useMemo(
+    () => actionConfigTransform('attack', 'rangedAttack'),
+    [actionConfigTransform],
+  );
 
-  const oghams = oghamsList.map<CombatAction>(
+  const oghams = useMemo(() => oghamsList.map<CombatAction>(
     (o:string) => actionConfigTransform(o, 'ogham'),
-  );
-  const abilities = abilitiesList.map<CombatAction>(
+  ), [actionConfigTransform, oghamsList]);
+
+  const abilities = useMemo(() => abilitiesList.map<CombatAction>(
     (a:string) => actionConfigTransform(a, 'ability'),
-  );
-  const tinctures = tincturesList.map<CombatAction>(
+  ), [abilitiesList, actionConfigTransform]);
+
+  const tinctures = useMemo(() => tincturesList.map<CombatAction>(
     (t:string) => actionConfigTransform(t, 'tincture'),
-  );
+  ), [actionConfigTransform, tincturesList]);
 
   return {
     name,

@@ -18,9 +18,11 @@ export function Battlefield():JSX.Element {
     enemies,
     activeAbility,
     setActiveAbility,
-    selectedEnemy,
     inTargetingMode,
     setTargetingMode,
+    target,
+    setTarget,
+    resolution,
   } = useCombatSystem();
 
   return (
@@ -39,10 +41,13 @@ export function Battlefield():JSX.Element {
           setTargetingMode={setTargetingMode}
           activeAbility={activeAbility}
           setActiveAbility={setActiveAbility}
+          target={target}
+          setTarget={setTarget}
+          resolution={resolution}
         />
       </BattlefieldRow>
       <TurnInfo remainingAP={remainingAP} isPlayerTurn={isPlayerTurn} />
-      {selectedEnemy && <SelectedDetails {...selectedEnemy} />}
+      {/* {selectedEnemy && <SelectedDetails {...selectedEnemy} />} */}
       <img
         src={`${process.env.PUBLIC_URL}${terrain}`}
         alt="background terrain"

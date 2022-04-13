@@ -10,15 +10,12 @@ export type QuickActionRowProps = {
 export function QuickActionRow({ actions }:QuickActionRowProps):JSX.Element {
   return (
     <div className="quick-action-row">
-      {actions && actions.map((action) => {
-        console.log(action);
-        return (
-          <CombatButton
-            key={action.id}
-            {...action}
-          />
-        );
-      })}
+      {actions && actions.map((action) => (
+        <CombatButton
+          key={action.id}
+          {...action}
+        />
+      ))}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, useCallback } from 'react';
 import { CombatAction } from '../../GlobalTypes';
 import './index.scss';
 
@@ -16,8 +16,8 @@ export const CombatButton:React.FC<CombatButtonProps> = ({
   identifier,
   ...rest
 }):JSX.Element => {
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>):void => {
-    // e.stopPropagation();
+  const onClick = useCallback((e: React.MouseEvent<HTMLButtonElement>):void => {
+    e.stopPropagation();
     handleClick(e, {
       name,
       id,
@@ -25,7 +25,7 @@ export const CombatButton:React.FC<CombatButtonProps> = ({
       apCost,
       identifier,
     });
-  };
+  }, [apCost, handleClick, id, identifier, name, remainingUses]);
 
   return (
     <div

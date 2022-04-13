@@ -1,5 +1,5 @@
 import {
-  useState, useCallback, useEffect, Dispatch, SetStateAction,
+  useState, useCallback, useEffect, Dispatch, SetStateAction, useMemo,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -10,14 +10,16 @@ import {
 export interface CombatSchematics {
   inTargetingMode: boolean,
   setTargetingMode: Dispatch<SetStateAction<boolean>>,
-  activeAbility: ActiveAbility,
+  activeAbility?: ActiveAbility,
   setActiveAbility: Dispatch<SetStateAction<ActiveAbility>>,
   terrain:string,
-  selectedEnemy?:Enemy,
   isPlayerTurn:boolean,
   remainingAP:number,
   enemies:Enemy[],
   allies:Ally[],
+  target?: Combatant,
+  resolution?: Combatant,
+  setTarget: Dispatch<SetStateAction<Combatant | undefined>>,
 }
 
 export function useCombatSystem():CombatSchematics {
@@ -79,15 +81,41 @@ export function useCombatSystem():CombatSchematics {
       identifier: Characters.Artemis,
     }],
   }]);
-  const [selectedEnemy, setSelectedEnemy] = useState<Enemy>();
   const [isPlayerTurn, setPlayerTurn] = useState(false);
   const [remainingAP, setRemainingAP] = useState(10);
   const [inTargetingMode, setTargetingMode] = useState(false);
   const [activeAbility, setActiveAbility] = useState<ActiveAbility>();
+  const [target, setTarget] = useState<Combatant | undefined>();
+  const [resolution, setResolution] = useState<Combatant | undefined>();
+
+  // if there is an ability selected we are in targeting mode
+  useEffect(
+    () => (activeAbility ? setTargetingMode(true) : setTargetingMode(false)),
+    [activeAbility],
+  );
+
+  // if there is an ability and a target resolve the action
+  useEffect(() => {
+    if (activeAbility && target) {
+      let result = target?.currentHealth;
+
+      if (activeAbility?.name === 'attack') {
+        // eslint-disable-next-line no-unsafe-optional-chaining
+        result = target?.currentHealth - 1 || target.currentHealth;
+      }
+
+      setResolution({
+        ...target,
+        currentHealth: result,
+      });
+
+      setActiveAbility(undefined);
+      setTarget(undefined);
+    }
+  }, [activeAbility, target]);
 
   return {
     terrain,
-    selectedEnemy,
     isPlayerTurn,
     remainingAP,
     enemies,
@@ -96,5 +124,8 @@ export function useCombatSystem():CombatSchematics {
     setTargetingMode,
     activeAbility,
     setActiveAbility,
+    target,
+    setTarget,
+    resolution,
   };
 }

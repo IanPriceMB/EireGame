@@ -7,7 +7,7 @@ export type CombatActionClick = (
 
 export type CardSelect = (
   e: React.MouseEvent<HTMLButtonElement>,
-  state: Omit<Combatant, 'attack'>,
+  state: Combatant,
 ) => void;
 
 export type CombatAction = {

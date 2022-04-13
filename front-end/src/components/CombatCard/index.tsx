@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   CardSelect, CombatAction, Combatant,
 } from '../../GlobalTypes';
@@ -30,7 +30,9 @@ export const CombatCard = ({
     [name],
   );
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>):void => {
+  const onClick = useCallback((e: React.MouseEvent<HTMLButtonElement>):void => {
+    e.preventDefault();
+
     onCardSelect(e, {
       statuses,
       key,
@@ -39,7 +41,7 @@ export const CombatCard = ({
       maxHealth,
       isEnemy,
     });
-  };
+  }, [currentHealth, isEnemy, key, maxHealth, name, onCardSelect, statuses]);
 
   return (
     <div className="combat-card">
