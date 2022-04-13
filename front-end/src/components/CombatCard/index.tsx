@@ -1,30 +1,28 @@
-import React, { ComponentProps, useMemo } from 'react';
-import { CombatAction, Combatant } from '../../GlobalTypes';
+import React, { useMemo } from 'react';
+import {
+  CardSelect, CombatAction, Combatant,
+} from '../../GlobalTypes';
 import { CombatCardFooter } from '../CombatCardFooter';
 import { CombatCardHeader } from '../CombatCardHeader';
 import { StatusBar } from '../StatusBar';
 import './index.scss';
 
-export interface CombatCardProps extends Omit<ComponentProps<'button'>, 'name'|'key'>, Combatant {
-    onCardSelect: (
-      e: React.MouseEvent<HTMLButtonElement>,
-      state: Omit<Combatant, 'attack'>,
-    ) => void,
-    handleClick?: () => void,
-    attack?: CombatAction,
+export interface CombatCardProps extends Omit<Combatant, 'attack'> {
+  onCardSelect: CardSelect;
+  attackConfig?: CombatAction;
 }
 
-export const CombatCard:React.FC<CombatCardProps> = ({
+export const CombatCard = ({
   statuses,
   key,
   name,
   currentHealth,
   maxHealth,
   onCardSelect,
-  attack,
-  handleClick,
+  attackConfig,
+  isEnemy,
   ...rest
-}): JSX.Element => {
+}:CombatCardProps): JSX.Element => {
   const fullArtSrc = useMemo(
     () => ((name === 'artemis' || name === 'saoirse')
       ? `${process.env.PUBLIC_URL}/images/expressions/${name}/${name}.png`
@@ -33,13 +31,13 @@ export const CombatCard:React.FC<CombatCardProps> = ({
   );
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>):void => {
-    // e.stopPropagation();
     onCardSelect(e, {
       statuses,
       key,
       name,
       currentHealth,
       maxHealth,
+      isEnemy,
     });
   };
 
@@ -61,7 +59,7 @@ export const CombatCard:React.FC<CombatCardProps> = ({
           alt={`${name} full art`}
           className="combat-card__full-art"
         />
-        {attack && <CombatCardFooter {...attack} handleClick={handleClick} />}
+        {(!isEnemy && attackConfig) && <CombatCardFooter {...attackConfig} />}
       </button>
     </div>
   );
@@ -69,6 +67,6 @@ export const CombatCard:React.FC<CombatCardProps> = ({
 
 CombatCard.defaultProps = {
   statuses: undefined,
-  handleClick: undefined,
-  attack: undefined,
+  handleAttack: undefined,
+  attackConfig: undefined,
 };

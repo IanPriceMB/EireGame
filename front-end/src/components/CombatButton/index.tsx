@@ -3,8 +3,7 @@ import { CombatAction } from '../../GlobalTypes';
 import './index.scss';
 
 export interface CombatButtonProps extends
-  Omit<ComponentProps<'button'>, 'name'|'id'>, Omit<CombatAction, 'handleClick'> {
-    handleClick?: () => void
+  Omit<ComponentProps<'button'>, 'name'|'id'>, CombatAction {
 }
 
 export const CombatButton:React.FC<CombatButtonProps> = ({
@@ -14,11 +13,18 @@ export const CombatButton:React.FC<CombatButtonProps> = ({
   image,
   remainingUses,
   apCost,
+  identifier,
   ...rest
 }):JSX.Element => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>):void => {
-    e.stopPropagation();
-    if (handleClick) handleClick();
+    // e.stopPropagation();
+    handleClick(e, {
+      name,
+      id,
+      remainingUses,
+      apCost,
+      identifier,
+    });
   };
 
   return (
@@ -33,7 +39,6 @@ export const CombatButton:React.FC<CombatButtonProps> = ({
         data-testid="combat-button__button"
         id={id}
         onClick={onClick}
-        disabled={rest.disabled || !handleClick}
         {...rest}
       >
         <img
@@ -44,20 +49,20 @@ export const CombatButton:React.FC<CombatButtonProps> = ({
         />
       </button>
       {remainingUses && (
-      <div
-        className="combat-button__remaining-uses"
-        data-testid="combat-button__remaining-uses"
-      >
-        {remainingUses}
-      </div>
+        <div
+          className="combat-button__remaining-uses"
+          data-testid="combat-button__remaining-uses"
+        >
+          {remainingUses}
+        </div>
       )}
       {apCost && (
-      <div
-        className="combat-button__ap-cost"
-        data-testid="combat-button__ap-cost"
-      >
-        {apCost}
-      </div>
+        <div
+          className="combat-button__ap-cost"
+          data-testid="combat-button__ap-cost"
+        >
+          {apCost}
+        </div>
       )}
     </div>
   );

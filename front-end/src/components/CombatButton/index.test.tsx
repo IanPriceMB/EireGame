@@ -2,6 +2,7 @@ import React from 'react';
 import { screen, render } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { CombatButton } from '.';
+import { Characters } from '../../GlobalTypes';
 
 describe('combat button tests', () => {
   it('exists', () => expect(CombatButton).toBeDefined());
@@ -11,10 +12,11 @@ describe('combat button tests', () => {
     render(<CombatButton
       name="Saoirse"
       id="id"
-      onClick={onClick}
+      handleClick={onClick}
       image="/icons/sword-wound.svg"
       remainingUses={5}
       apCost={1}
+      identifier={Characters.Saoirse}
     />);
 
     expect(screen.getByTestId('combat-button')).toBeDefined();

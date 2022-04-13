@@ -5,16 +5,9 @@ import {
 } from '../CombatButton';
 import './index.scss';
 
-export interface CombatCardFooterProps extends Omit<CombatAction, 'handleClick'> {
-  handleClick?: () => void
-}
-
-export const CombatCardFooter:React.FC<CombatCardFooterProps> = ({
-  handleClick,
-  ...rest
-}):JSX.Element => (
+export const CombatCardFooter:React.FC<CombatAction> = (props):JSX.Element => (
   <footer className="combat-card-footer">
-    <CombatButton handleClick={handleClick} {...rest} />
+    <CombatButton {...props} />
   </footer>
 );
 

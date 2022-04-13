@@ -14,5 +14,5 @@ export * from './CombatCardHeader';
 export * from './TurnInfo';
 export * from './SelectedDetails';
 export * from './QuickActionsGrid';
-export * from './SpellOptionsModal';
+export * from './CombatCharacter';
 export * from './CutsceneSettingsMenuOptions';

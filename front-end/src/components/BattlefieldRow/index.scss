@@ -6,6 +6,9 @@
   justify-content: center;
   align-items: flex-end;
 
+  position: relative;
+  z-index: 5;
+
   > * {
     margin: 0 48px;
   }

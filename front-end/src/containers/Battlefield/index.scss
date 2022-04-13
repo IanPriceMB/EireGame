@@ -2,8 +2,16 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  position: relative;
 
   &__terrain {
     max-width: 100%;
+  }
+
+  &__cancel-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2;
   }
 }
