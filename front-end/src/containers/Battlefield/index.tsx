@@ -5,6 +5,7 @@ import { TurnInfo } from '../../components/TurnInfo';
 import { Enemy } from '../../GlobalTypes';
 import { useCombatSystem } from '../../hooks';
 import { BattleReadyArtemis } from '../BattleReadyArtemis';
+import { BattleReadyBea } from '../BattleReadyBea';
 import { BattleReadyFang } from '../BattleReadyFang';
 import { BattleReadySaoirse } from '../BattleReadySaoirse';
 import './index.scss';
@@ -45,6 +46,12 @@ export function Battlefield():JSX.Element {
           resolution={resolution}
         />
         <BattleReadyFang
+          inTargetingMode={inTargetingMode}
+          setActiveAbility={setActiveAbility}
+          setTarget={setTarget}
+          resolution={resolution}
+        />
+        <BattleReadyBea
           inTargetingMode={inTargetingMode}
           setActiveAbility={setActiveAbility}
           setTarget={setTarget}

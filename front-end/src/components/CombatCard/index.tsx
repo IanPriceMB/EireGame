@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import {
-  CardSelect, CombatAction, Combatant,
+  CardSelect, Characters, CombatAction, Combatant,
 } from '../../GlobalTypes';
 import { CombatCardFooter } from '../CombatCardFooter';
 import { CombatCardHeader } from '../CombatCardHeader';
@@ -24,7 +24,8 @@ export const CombatCard = ({
   ...rest
 }:CombatCardProps): JSX.Element => {
   const fullArtSrc = useMemo(
-    () => ((name === 'artemis' || name === 'saoirse')
+    () => ((name === Characters.Artemis || name === Characters.Saoirse || name === Characters.Fang
+      || name === Characters.Bea)
       ? `${process.env.PUBLIC_URL}/images/expressions/${name}/${name}.png`
       : `${process.env.PUBLIC_URL}/images/enemies/${name}.jpg`),
     [name],
