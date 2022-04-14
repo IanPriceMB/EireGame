@@ -2,6 +2,7 @@ import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import { BattlefieldRow, BattlefieldRowProps, RowType } from '.';
 import { CombatCard } from '../CombatCard';
+import { Characters } from '../../GlobalTypes';
 
 export default {
   title: 'Battle Screen/Battlefield Row',
@@ -17,7 +18,8 @@ const Template: Story<BattlefieldRowProps> = (args) => (
       maxHealth={20}
       isEnemy={false}
       onCardSelect={() => console.log('selected')}
-      key="saoirse"
+      identifier="saoirse"
+      fullArtSrc={`${process.env.PUBLIC_URL}/images/expressions/${Characters.Mordred}/${Characters.Mordred}.png`}
     />
   </BattlefieldRow>
 );

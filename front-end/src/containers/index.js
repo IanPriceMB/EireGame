@@ -6,3 +6,5 @@ export * from './BattleReadyArtemis';
 export * from './BattleReadyFang';
 export * from './BattleReadySaoirse';
 export * from './BattleReadyBea';
+export * from './BattleReadyMordred';
+export * from './BattleEnemy';

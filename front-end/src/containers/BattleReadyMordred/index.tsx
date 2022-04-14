@@ -4,10 +4,10 @@ import {
 } from '../../GlobalTypes';
 import { BattleCharacter } from '../BattleCharacter';
 
-const artemis = {
+const mordred = {
   statuses: ['poison'] as StatusOption[],
-  name: Characters.Artemis,
-  identifier: Characters.Artemis,
+  name: Characters.Mordred,
+  identifier: Characters.Mordred,
   currentHealth: 20,
   maxHealth: 20,
   isEnemy: false,
@@ -15,15 +15,15 @@ const artemis = {
   abilities: ['ability'],
   tinctures: ['tincture'],
   attackIcon: 'rangedAttack',
-  fullArtSrc: `${process.env.PUBLIC_URL}/images/expressions/${Characters.Artemis}/${Characters.Artemis}.png`,
+  fullArtSrc: `${process.env.PUBLIC_URL}/images/expressions/${Characters.Mordred}/${Characters.Mordred}.png`,
 } as CharacterData;
 
 type Props = Omit<CombatantProps<CharacterData>, 'data'>
 
-export const BattleReadyArtemis = forwardRef((props:Props, ref:React.Ref<HTMLButtonElement> | undefined):JSX.Element => (
-  <BattleCharacter {...props} data={artemis} ref={ref} />
+export const BattleReadyMordred = forwardRef((props:Props, ref:React.Ref<HTMLButtonElement> | undefined):JSX.Element => (
+  <BattleCharacter {...props} data={mordred} ref={ref} />
 ));
 
-BattleReadyArtemis.defaultProps = {
+BattleReadyMordred.defaultProps = {
   resolution: undefined,
 };

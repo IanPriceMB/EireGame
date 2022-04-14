@@ -7,9 +7,11 @@ export type CombatActionClick = (
   state: Omit<CombatAction, 'handleClick'|'image'>
 ) => void;
 
+export type CardSelectState = Omit<Combatant, 'fullArtSrc'|'onCardSelect'|'inTargetingMode'>
+
 export type CardSelect = (
   e: React.MouseEvent<HTMLButtonElement>,
-  state: Combatant,
+  state: CardSelectState,
 ) => void;
 
 export type CombatAction = {
@@ -22,20 +24,26 @@ export type CombatAction = {
   identifier: Characters
 }
 
-export type ActiveAbility = Omit<CombatAction, 'handleClick' | 'image'> | undefined
+export type ActiveAbility = Omit<CombatAction, 'handleClick' | 'image'| 'identifier'> & {
+  identifier: string|Characters
+} | undefined
 
 export interface Combatant {
   statuses?: StatusOption[];
   name: string;
-  key: string;
+  identifier: string;
   currentHealth: number;
   maxHealth: number;
   isEnemy: boolean;
+  onCardSelect: CardSelect,
+  inTargetingMode: boolean,
+  fullArtSrc: string;
 }
 
 export interface Enemy extends Combatant {
   oghams?: CombatAction[],
   abilities?: CombatAction[],
+
 }
 
 export interface Ally extends Enemy {
@@ -43,8 +51,6 @@ export interface Ally extends Enemy {
   attackConfig: CombatAction
   handleBack?: () => void,
   isOpen?: boolean;
-  onCardSelect: CardSelect,
-  inTargetingMode: boolean,
   handleCancel: () => void
 }
 
@@ -58,23 +64,32 @@ export enum Characters {
   'Fang' = 'fang',
 }
 
-export type CharacterData = {
+export type EnemyData = {
   statuses?: StatusOption[]
-  name: Characters;
-  key: Characters,
+  name: string;
+  identifier: string,
   currentHealth: number;
   maxHealth: number;
   isEnemy: boolean,
-  oghams: string[];
-  abilities: string[];
-  tinctures: string[];
-  attackIcon: string
+  oghams?: string[];
+  abilities?: string[];
+  fullArtSrc: string;
 }
 
-export type BattleCharacterProps = {
+export type CharacterData = Omit<EnemyData, 'name'|'identifier'> & {
+  tinctures?: string[];
+  attackIcon: string;
+  name: Characters;
+  identifier: Characters,
+}
+
+export type CombatantProps<T> = {
   inTargetingMode: boolean,
   setActiveAbility: Dispatch<SetStateAction<ActiveAbility>>,
-  setTarget: Dispatch<SetStateAction<Combatant | undefined>>,
-  resolution?: Combatant,
-  characterData: CharacterData
+  setTarget: Dispatch<SetStateAction<CardSelectState | undefined>>,
+  resolution?: CardSelectState,
+  handleKnockout: (identifier: string|Characters) => void;
+  activeEnemy?: string|undefined;
+  isPlayerTurn?: boolean;
+  data: T
 }

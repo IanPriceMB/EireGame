@@ -3,20 +3,26 @@ import {
 } from 'react';
 import {
   Ally,
-  BattleCharacterProps,
-  CardSelect, CombatAction, CombatActionClick,
+  CombatantProps,
+  CardSelect, CombatAction, CombatActionClick, CharacterData,
 } from '../../GlobalTypes';
+
+interface Result extends Ally {
+  isPlayerTurn?: boolean
+}
 
 export function useCharacter({
   inTargetingMode,
   setActiveAbility,
   setTarget,
   resolution,
-  characterData,
-}:BattleCharacterProps):Ally {
-  const [currentHealth, setCurrentHealth] = useState(characterData.currentHealth);
-  const [maxHealth, setMaxHealth] = useState(characterData.maxHealth);
-  const [statuses, setStatuses] = useState(characterData.statuses);
+  handleKnockout,
+  isPlayerTurn,
+  data,
+}:CombatantProps<CharacterData>):Result {
+  const [currentHealth, setCurrentHealth] = useState(data.currentHealth);
+  const [maxHealth, setMaxHealth] = useState(data.maxHealth);
+  const [statuses, setStatuses] = useState(data.statuses);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const handleCancel = useCallback(():void => setActiveAbility(undefined), [setActiveAbility]);
@@ -25,11 +31,17 @@ export function useCharacter({
 
   useEffect(() => {
     if (resolution) {
-      if (resolution.key === characterData.key) {
+      console.log('resolution', resolution.identifier === data.identifier);
+      if (resolution.identifier === data.identifier) {
         setCurrentHealth(resolution.currentHealth);
       }
     }
-  }, [characterData.key, resolution]);
+  }, [data.identifier, resolution]);
+
+  // get knocked out
+  useEffect(() => {
+    if (currentHealth <= 0) handleKnockout(data.identifier);
+  }, [currentHealth, data.identifier, handleKnockout]);
 
   const handleActionButton: CombatActionClick = useCallback((e, state) => {
     setActiveAbility(state);
@@ -47,45 +59,47 @@ export function useCharacter({
 
   const actionConfigTransform = useCallback((string:string, icon:string):CombatAction => ({
     name: string,
-    id: `${characterData.key}${string.replace(/\s/g, '')}`,
+    id: `${data.identifier}${string.replace(/\s/g, '')}`,
     image: `${process.env.PUBLIC_URL}/icons/${icon}.svg`,
     apCost: 1,
     handleClick: handleActionButton,
-    identifier: characterData.key,
-  }), [characterData.key, handleActionButton]);
+    identifier: data.identifier,
+  }), [data.identifier, handleActionButton]);
 
   const attackConfig = useMemo(
-    () => actionConfigTransform('attack', characterData.attackIcon),
-    [actionConfigTransform, characterData.attackIcon],
+    () => actionConfigTransform('attack', data.attackIcon),
+    [actionConfigTransform, data.attackIcon],
   );
 
-  const oghams = useMemo(() => characterData.oghams.map<CombatAction>(
+  const oghams = useMemo(() => data.oghams?.map<CombatAction>(
     (o:string) => actionConfigTransform(o, 'ogham'),
-  ), [actionConfigTransform, characterData.oghams]);
+  ), [actionConfigTransform, data.oghams]);
 
-  const abilities = useMemo(() => characterData.abilities.map<CombatAction>(
+  const abilities = useMemo(() => data.abilities?.map<CombatAction>(
     (a:string) => actionConfigTransform(a, 'ability'),
-  ), [actionConfigTransform, characterData.abilities]);
+  ), [actionConfigTransform, data.abilities]);
 
-  const tinctures = useMemo(() => characterData.tinctures.map<CombatAction>(
+  const tinctures = useMemo(() => data.tinctures?.map<CombatAction>(
     (t:string) => actionConfigTransform(t, 'tincture'),
-  ), [actionConfigTransform, characterData.tinctures]);
+  ), [actionConfigTransform, data.tinctures]);
 
   return {
     statuses,
-    name: characterData.name,
+    name: data.name,
     currentHealth,
     maxHealth,
     oghams,
     abilities,
     tinctures,
     attackConfig,
-    key: characterData.key,
+    identifier: data.identifier,
     onCardSelect: inTargetingMode ? onTargetSelect : onCardSelect,
     isOpen: isOptionsOpen,
-    isEnemy: characterData.isEnemy,
+    isEnemy: data.isEnemy,
     inTargetingMode,
     handleCancel,
     handleBack,
+    fullArtSrc: data.fullArtSrc,
+    isPlayerTurn,
   };
 }

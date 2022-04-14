@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
-  BattleCharacterProps, CharacterData, Characters, StatusOption,
+  CombatantProps, CharacterData, Characters, StatusOption,
 } from '../../GlobalTypes';
 import { BattleCharacter } from '../BattleCharacter';
 
 const bea = {
   statuses: [] as StatusOption[],
   name: Characters.Bea,
-  key: Characters.Bea,
+  identifier: Characters.Bea,
   currentHealth: 20,
   maxHealth: 20,
   isEnemy: false,
@@ -15,13 +15,14 @@ const bea = {
   abilities: ['ability', 'ability2'],
   tinctures: ['alchohol', 'potion', 'elixer'],
   attackIcon: 'meleeAttack',
+  fullArtSrc: `${process.env.PUBLIC_URL}/images/expressions/${Characters.Bea}/${Characters.Bea}.png`,
 } as CharacterData;
 
-type Props = Omit<BattleCharacterProps, 'characterData'>
+type Props = Omit<CombatantProps<CharacterData>, 'data'>
 
-export const BattleReadyBea = (props:Props):JSX.Element => (
-  <BattleCharacter {...props} characterData={bea} />
-);
+export const BattleReadyBea = forwardRef((props:Props, ref:React.Ref<HTMLButtonElement> | undefined):JSX.Element => (
+  <BattleCharacter {...props} data={bea} ref={ref} />
+));
 
 BattleReadyBea.defaultProps = {
   resolution: undefined,

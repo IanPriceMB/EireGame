@@ -5,10 +5,14 @@ export type TUseAnimatedTextProps = {
   speed?: number
 }
 
+export type AnimatedTextOptions = {
+  text: string, skipToFullText: () => void, hasTextCompleted: boolean,
+}
+
 export const useAnimatedText = ({
   textToAnimate,
   speed = 40,
-}: TUseAnimatedTextProps) => {
+}: TUseAnimatedTextProps):AnimatedTextOptions => {
   const [text, setText] = useState('');
   const [fullText, setFullText] = useState(textToAnimate);
   const [index, setIndex] = useState(0);

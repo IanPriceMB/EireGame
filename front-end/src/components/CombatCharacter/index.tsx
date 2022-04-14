@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
-  Ally, CardSelect, CombatAction, Combatant,
+  Ally,
 } from '../../GlobalTypes';
 import { CombatCard } from '../CombatCard';
 import { QuickActionsGrid } from '../QuickActionsGrid';
 import './index.scss';
 
-export interface CombatCharacterProps extends Ally {
-  onCardSelect: CardSelect,
-  handleBack?: () => void,
-  isOpen?: boolean;
-  attackConfig: CombatAction;
-  inTargetingMode: boolean,
-  handleCancel: () => void,
+interface CombatCharacterProps extends Ally {
+  isPlayerTurn?:boolean;
 }
 
-export const CombatCharacter: React.FC<CombatCharacterProps> = ({
+export const CombatCharacter = forwardRef(({
   oghams,
   abilities,
   tinctures,
@@ -23,11 +18,13 @@ export const CombatCharacter: React.FC<CombatCharacterProps> = ({
   isOpen,
   inTargetingMode,
   handleCancel,
+  isPlayerTurn,
   ...rest
-}):JSX.Element | null => (
+}:CombatCharacterProps, ref:React.Ref<HTMLButtonElement> | undefined):JSX.Element | null => (
   <>
     <CombatCard
       {...rest}
+      ref={ref}
     />
     {isOpen ? (
       <div className="combat-character">
@@ -57,7 +54,7 @@ export const CombatCharacter: React.FC<CombatCharacterProps> = ({
         )}
         <div className="combat-character__screen" />
       </div>
-    ) : inTargetingMode && (
+    ) : (inTargetingMode && isPlayerTurn) && (
       <button
         className="battlefield__cancel-button"
         id="battlefield__cancel-button"
@@ -69,7 +66,7 @@ export const CombatCharacter: React.FC<CombatCharacterProps> = ({
       </button>
     )}
   </>
-);
+));
 
 CombatCharacter.defaultProps = {
   isOpen: false,
@@ -77,4 +74,5 @@ CombatCharacter.defaultProps = {
   oghams: undefined,
   abilities: undefined,
   tinctures: undefined,
+  isPlayerTurn: undefined,
 };
