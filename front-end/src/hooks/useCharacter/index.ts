@@ -31,7 +31,6 @@ export function useCharacter({
 
   useEffect(() => {
     if (resolution) {
-      console.log('resolution', resolution.identifier === data.identifier);
       if (resolution.identifier === data.identifier) {
         setCurrentHealth(resolution.currentHealth);
       }
@@ -53,9 +52,10 @@ export function useCharacter({
   }, []);
 
   const onTargetSelect: CardSelect = useCallback((e, state) => {
+    if (currentHealth >= 0) return;
     setTarget(state);
     setIsOptionsOpen(false);
-  }, [setTarget]);
+  }, [currentHealth, setTarget]);
 
   const actionConfigTransform = useCallback((string:string, icon:string):CombatAction => ({
     name: string,

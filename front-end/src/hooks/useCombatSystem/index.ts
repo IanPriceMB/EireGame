@@ -71,7 +71,7 @@ export function useCombatSystem():CombatSchematics {
   ]);
   const [isPlayerTurn, setPlayerTurn] = useState(false);
   const [activeEnemy, setActiveEnemy] = useState<string|undefined>();
-  const [remainingAP, setRemainingAP] = useState(10);
+  const [remainingAP, setRemainingAP] = useState(2);
   const [activeAbility, setActiveAbility] = useState<ActiveAbility>();
   const [inTargetingMode, setTargetingMode] = useState(false);
   const [target, setTarget] = useState<CardSelectState | undefined>();
@@ -160,7 +160,7 @@ export function useCombatSystem():CombatSchematics {
   // if remaining ap runs out we reset and move turn
   useEffect(() => {
     if (remainingAP <= 0) {
-      setRemainingAP(10);
+      setRemainingAP(2);
       setPlayerTurn(!isPlayerTurn);
     }
   }, [isPlayerTurn, remainingAP]);

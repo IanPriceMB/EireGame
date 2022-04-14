@@ -1,9 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BattlefieldRow } from '../../components/BattlefieldRow';
-import { CombatCard } from '../../components/CombatCard';
 import { TurnInfo } from '../../components/TurnInfo';
-import { Enemy, EnemyData } from '../../GlobalTypes';
+import { EnemyData } from '../../GlobalTypes';
 import { useCombatSystem } from '../../hooks';
 import { BattleEnemy } from '../BattleEnemy';
 import { BattleReadyArtemis } from '../BattleReadyArtemis';

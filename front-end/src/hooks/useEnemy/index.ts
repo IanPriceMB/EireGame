@@ -48,8 +48,9 @@ export function useEnemy({
   const onCardSelect: CardSelect = useCallback((e, state) => null, []);
 
   const onTargetSelect: CardSelect = useCallback((e, state) => {
+    if (currentHealth <= 0) return;
     setTarget(state);
-  }, [setTarget]);
+  }, [currentHealth, setTarget]);
 
   return {
     statuses,

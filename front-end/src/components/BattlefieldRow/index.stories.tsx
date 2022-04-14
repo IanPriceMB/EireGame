@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import { BattlefieldRow, BattlefieldRowProps, RowType } from '.';
+import { BattlefieldRow, BattlefieldRowProps } from '.';
 import { CombatCard } from '../CombatCard';
 import { Characters } from '../../GlobalTypes';
 
@@ -17,6 +17,7 @@ const Template: Story<BattlefieldRowProps> = (args) => (
       currentHealth={13}
       maxHealth={20}
       isEnemy={false}
+      // eslint-disable-next-line no-console
       onCardSelect={() => console.log('selected')}
       identifier="saoirse"
       fullArtSrc={`${process.env.PUBLIC_URL}/images/expressions/${Characters.Mordred}/${Characters.Mordred}.png`}
