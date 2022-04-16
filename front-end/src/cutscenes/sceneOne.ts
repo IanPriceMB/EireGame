@@ -15,9 +15,4 @@ export const sceneOne: TCutsceneData = {
       altFaceText: 'Excited Artemis',
     },
   ],
-  background: {
-    image: `${process.env.PUBLIC_URL}/images/backgrounds/deepWater.jpg`,
-    altText: 'Deep Water',
-  },
-  sceneEndPath: '/battle',
 };

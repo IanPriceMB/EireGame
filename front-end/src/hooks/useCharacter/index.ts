@@ -4,8 +4,9 @@ import {
 import {
   Ally,
   CombatantProps,
-  CardSelect, CombatAction, CombatActionClick, CharacterData,
+  CardSelect, DetailedCombatAction, CombatActionClick, CharacterData, Characters, Oghams,
 } from '../../GlobalTypes';
+import { staves } from '../../maps';
 
 interface Result extends Ally {
   isPlayerTurn?: boolean
@@ -19,7 +20,7 @@ export function useCharacter({
   handleKnockout,
   isPlayerTurn,
   data,
-}:CombatantProps<CharacterData>):Result {
+}:CombatantProps<CharacterData, Characters>):Result {
   const [currentHealth, setCurrentHealth] = useState(data.currentHealth);
   const [maxHealth, setMaxHealth] = useState(data.maxHealth);
   const [statuses, setStatuses] = useState(data.statuses);
@@ -52,18 +53,23 @@ export function useCharacter({
   }, []);
 
   const onTargetSelect: CardSelect = useCallback((e, state) => {
-    if (currentHealth >= 0) return;
+    if (currentHealth <= 0) return;
     setTarget(state);
     setIsOptionsOpen(false);
   }, [currentHealth, setTarget]);
 
-  const actionConfigTransform = useCallback((string:string, icon:string):CombatAction => ({
+  const actionConfigTransform = useCallback((
+    string:string,
+    icon:string,
+    detailedInfo?:string,
+  ):DetailedCombatAction => ({
     name: string,
     id: `${data.identifier}${string.replace(/\s/g, '')}`,
     image: `${process.env.PUBLIC_URL}/icons/${icon}.svg`,
     apCost: 1,
     handleClick: handleActionButton,
     identifier: data.identifier,
+    detailedInfo,
   }), [data.identifier, handleActionButton]);
 
   const attackConfig = useMemo(
@@ -71,16 +77,40 @@ export function useCharacter({
     [actionConfigTransform, data.attackIcon],
   );
 
-  const oghams = useMemo(() => data.oghams?.map<CombatAction>(
-    (o:string) => actionConfigTransform(o, 'ogham'),
-  ), [actionConfigTransform, data.oghams]);
+  const oghams = useMemo(() => data.oghams?.map<DetailedCombatAction>(
+    (o) => {
+      const oghamInfo = staves[o];
+      return ({
+        ...oghamInfo,
+        id: `${data.identifier}${oghamInfo?.name.replace(/\s/g, '')}`,
+        handleClick: handleActionButton,
+        identifier: data.identifier,
+      });
+    },
+  ), [data.identifier, data.oghams, handleActionButton]);
 
-  const abilities = useMemo(() => data.abilities?.map<CombatAction>(
-    (a:string) => actionConfigTransform(a, 'ability'),
-  ), [actionConfigTransform, data.abilities]);
+  const enchantments = useMemo(() => data.enchantments?.map<DetailedCombatAction>(
+    (a:string) => actionConfigTransform(
+      a,
+      'ability',
+      'this is a default sentence. this is some extra shit to test my own patience',
+    ),
+  ), [actionConfigTransform, data.enchantments]);
 
-  const tinctures = useMemo(() => data.tinctures?.map<CombatAction>(
-    (t:string) => actionConfigTransform(t, 'tincture'),
+  const feats = useMemo(() => data.feats?.map<DetailedCombatAction>(
+    (a:string) => actionConfigTransform(
+      a,
+      'enchantment',
+      'this is a default sentence. this is some extra shit to test my own patience',
+    ),
+  ), [actionConfigTransform, data.feats]);
+
+  const tinctures = useMemo(() => data.tinctures?.map<DetailedCombatAction>(
+    (t:string) => actionConfigTransform(
+      t,
+      'tincture',
+      'this is a default sentence. this is some extra shit to test my own patience',
+    ),
   ), [actionConfigTransform, data.tinctures]);
 
   return {
@@ -89,7 +119,8 @@ export function useCharacter({
     currentHealth,
     maxHealth,
     oghams,
-    abilities,
+    enchantments,
+    feats,
     tinctures,
     attackConfig,
     identifier: data.identifier,

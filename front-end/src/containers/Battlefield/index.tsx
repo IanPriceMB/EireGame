@@ -1,15 +1,12 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BattlefieldRow } from '../../components/BattlefieldRow';
 import { TurnInfo } from '../../components/TurnInfo';
-import { EnemyData } from '../../GlobalTypes';
+import { Characters, EnemyData } from '../../GlobalTypes';
 import { useCombatSystem } from '../../hooks';
+import { BattleCharacter } from '../BattleCharacter';
 import { BattleEnemy } from '../BattleEnemy';
-import { BattleReadyArtemis } from '../BattleReadyArtemis';
-import { BattleReadyBea } from '../BattleReadyBea';
-import { BattleReadyFang } from '../BattleReadyFang';
-import { BattleReadyMordred } from '../BattleReadyMordred';
-import { BattleReadySaoirse } from '../BattleReadySaoirse';
 import './index.scss';
 
 export function Battlefield():JSX.Element {
@@ -22,9 +19,11 @@ export function Battlefield():JSX.Element {
     inTargetingMode,
     setTarget,
     resolution,
-    handleKnockout,
+    handleAllyKnockout,
+    handleEnemyKnockout,
     isBattleOver,
     activeEnemy,
+    allies,
     artemisCard,
     fangCard,
     saoirseCard,
@@ -52,58 +51,33 @@ export function Battlefield():JSX.Element {
             setActiveAbility={setActiveAbility}
             setTarget={setTarget}
             resolution={resolution}
-            handleKnockout={handleKnockout}
+            handleKnockout={handleEnemyKnockout}
             activeEnemy={activeEnemy}
             data={enemy}
           />
         ))}
       </BattlefieldRow>
       <BattlefieldRow type="ally">
-        <BattleReadyArtemis
-          inTargetingMode={inTargetingMode}
-          setActiveAbility={setActiveAbility}
-          setTarget={setTarget}
-          resolution={resolution}
-          handleKnockout={handleKnockout}
-          isPlayerTurn={isPlayerTurn}
-          ref={artemisCard}
-        />
-        <BattleReadyFang
-          inTargetingMode={inTargetingMode}
-          setActiveAbility={setActiveAbility}
-          setTarget={setTarget}
-          resolution={resolution}
-          handleKnockout={handleKnockout}
-          isPlayerTurn={isPlayerTurn}
-          ref={fangCard}
-        />
-        <BattleReadySaoirse
-          inTargetingMode={inTargetingMode}
-          setActiveAbility={setActiveAbility}
-          setTarget={setTarget}
-          resolution={resolution}
-          handleKnockout={handleKnockout}
-          isPlayerTurn={isPlayerTurn}
-          ref={saoirseCard}
-        />
-        <BattleReadyBea
-          inTargetingMode={inTargetingMode}
-          setActiveAbility={setActiveAbility}
-          setTarget={setTarget}
-          resolution={resolution}
-          handleKnockout={handleKnockout}
-          isPlayerTurn={isPlayerTurn}
-          ref={beaCard}
-        />
-        <BattleReadyMordred
-          inTargetingMode={inTargetingMode}
-          setActiveAbility={setActiveAbility}
-          setTarget={setTarget}
-          resolution={resolution}
-          handleKnockout={handleKnockout}
-          isPlayerTurn={isPlayerTurn}
-          ref={mordredCard}
-        />
+        {allies.map((ally) => (
+          <BattleCharacter
+            character={ally}
+            inTargetingMode={inTargetingMode}
+            setActiveAbility={setActiveAbility}
+            setTarget={setTarget}
+            resolution={resolution}
+            handleKnockout={handleAllyKnockout}
+            isPlayerTurn={isPlayerTurn}
+            ref={
+              ally === Characters.Artemis ? artemisCard
+                : ally === Characters.Bea ? beaCard
+                  : ally === Characters.Fang ? fangCard
+                    : ally === Characters.Saoirse ? saoirseCard
+                      : ally === Characters.Mordred ? mordredCard
+                        : null
+            }
+          />
+        ))}
+
       </BattlefieldRow>
       <TurnInfo remainingAP={remainingAP} isPlayerTurn={isPlayerTurn} />
       <img

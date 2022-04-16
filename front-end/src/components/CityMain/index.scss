@@ -1,0 +1,62 @@
+.city-main {
+  height: inherit;
+  width: inherit;
+  position: relative;
+  
+  &__nav {
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    z-index: 2;
+    background-color: none;
+  }
+
+  &__link {
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    position: absolute;
+    text-decoration: none;
+  }
+
+  #outskirts {
+    bottom: 38%;
+    left: 43%
+  }
+  #hobby {
+    bottom: 42%;
+    left: 23%
+  }
+  #weapons{
+    top: 43%;
+    right: 20%;
+  }
+  #witchcraft{
+    top: 12%;
+    right: 20%;
+  }
+  #brothel{
+    bottom: 38%;
+    left: 28%
+  }
+  #library{
+    top: 33%;
+    right: 15%;
+  }
+  #pub{
+    bottom: 55%;
+    left: 15%
+  }
+  #stayOver{
+    bottom: 50%;
+    left: 15%
+  }
+
+  img {
+    height: inherit;
+    width: inherit;
+    position: relative;
+    z-index: 1;
+  }
+}

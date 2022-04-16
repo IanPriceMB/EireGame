@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="60"
+   height="51.011276"
+   id="Ogham vertical letter or"
+   sodipodi:version="0.32"
+   inkscape:version="0.44"
+   version="1.0"
+   sodipodi:docbase="D:\Home\Wikipedia\up"
+   sodipodi:docname="Ogham vertical letter or.svg">
+  <defs
+     id="defs2193" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8.65"
+     inkscape:cx="25.505638"
+     inkscape:cy="30"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1024"
+     inkscape:window-height="682"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4" />
+  <metadata
+     id="metadata2196">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-349.4944,-502.3622)">
+    <path
+       style="color:black;fill:black;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4.00000477;stroke-linecap:square;stroke-linejoin:miter;marker:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       d="M 357.62866,527.86507 L 359.03491,529.30257 L 377.50366,547.77132 L 377.50366,553.36507 L 381.50366,553.36507 L 381.50366,547.74007 L 399.94116,529.30257 L 401.37866,527.86507 L 399.94116,526.45882 L 381.50366,508.02132 L 381.50366,502.36507 L 377.50366,502.36507 L 377.50366,507.99007 L 359.03491,526.45882 L 357.62866,527.86507 z M 363.28491,527.86507 L 377.50366,513.64632 L 377.50366,542.08382 L 363.28491,527.86507 z M 381.50366,542.08382 L 381.50366,513.64632 L 395.72241,527.86507 L 381.50366,542.08382 z "
+       id="rect2153" />
+  </g>
+</svg>

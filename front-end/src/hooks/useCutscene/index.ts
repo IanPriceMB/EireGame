@@ -1,9 +1,21 @@
 import {
-  useCallback, useState, useMemo, useEffect,
+  useCallback, useState, useMemo, Dispatch, SetStateAction,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAnimatedText } from '../useAnimatedText';
-import { TUseCutsceneProps } from '../../cutscenes/types';
+import { TCutsceneData, TDialogue, TUseCutsceneProps } from '../../cutscenes/types';
+
+export type CutsceneSchematics = {
+  dialogue: string,
+  speakerInfo: TDialogue,
+  setCurrentStep: Dispatch<SetStateAction<number>>;
+  setCutscene: Dispatch<SetStateAction<TCutsceneData>>,
+  skipCutscene: () => void,
+  handleNext: () => void,
+  hasTextCompleted: boolean;
+  skipToFullText: () => void;
+  hasSceneCompleted: boolean;
+  setSceneCompleted: Dispatch<SetStateAction<boolean>>;
+}
 
 export const useCutscene = ({
   cutsceneData,
@@ -11,9 +23,6 @@ export const useCutscene = ({
   const [currentStep, setCurrentStep] = useState(0);
   const [cutscene, setCutscene] = useState(cutsceneData);
   const [hasSceneCompleted, setSceneCompleted] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => (hasSceneCompleted ? navigate(cutsceneData.sceneEndPath) : undefined));
 
   const textToAnimate = useMemo(
     () => cutscene.dialogue[currentStep].dialogue,
@@ -42,7 +51,6 @@ export const useCutscene = ({
 
   return {
     dialogue: text,
-    background: cutscene.background,
     speakerInfo: cutscene.dialogue[currentStep],
     setCurrentStep,
     setCutscene,

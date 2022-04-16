@@ -1,0 +1,47 @@
+.shop {
+  height: inherit;
+  width: inherit;
+  position: relative;
+  
+  &__nav {
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    z-index: 2;
+    background-color: none;
+  }
+
+  &__link {
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    position: absolute;
+    text-decoration: none;
+  }
+
+  #druidry {
+    top: 38%;
+    right: 33%
+  }
+  #main {
+    bottom: 5%;
+    left: 50%
+  }
+  #tinctures {
+    top: 30%;
+    left: 23%
+  }
+  #field {
+    bottom: 35%;
+    left: 38%
+  }
+  
+
+  img {
+    height: inherit;
+    width: inherit;
+    position: relative;
+    z-index: 1;
+  }
+}

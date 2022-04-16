@@ -23,7 +23,8 @@ export interface CombatSchematics {
   resolution?: CardSelectState,
   setTarget: Dispatch<SetStateAction<CardSelectState | undefined>>,
   isBattleOver: 'win'|'loss'|undefined;
-  handleKnockout: (identifier: string|Characters) => void
+  handleEnemyKnockout: (identifier: string) => void
+  handleAllyKnockout: (identifier: Characters) => void
   activeEnemy: string|undefined;
   artemisCard: React.Ref<HTMLButtonElement> | undefined
   fangCard: React.Ref<HTMLButtonElement> | undefined
@@ -62,6 +63,8 @@ export function useCombatSystem():CombatSchematics {
     isEnemy: true,
     fullArtSrc: `${process.env.PUBLIC_URL}/images/enemies/selkie.jpg`,
   }]);
+  const [aliveEnemies, setAliveEnemies] = useState<string[]>(['selkie1', 'selkie2', 'kelpie1']);
+  const [knockedOutEnemies, setKnockedOutEnemies] = useState<string[]>([]);
   const [allies, setAllies] = useState<Characters[]>([
     Characters.Artemis,
     Characters.Bea,
@@ -69,6 +72,14 @@ export function useCombatSystem():CombatSchematics {
     Characters.Saoirse,
     Characters.Mordred,
   ]);
+  const [aliveAllies, setAliveAllies] = useState<Characters[]>([
+    Characters.Artemis,
+    Characters.Bea,
+    Characters.Fang,
+    Characters.Saoirse,
+    Characters.Mordred,
+  ]);
+  const [knockedOutAllies, setKnockedOutAllies] = useState<Characters[]>([]);
   const [isPlayerTurn, setPlayerTurn] = useState(false);
   const [activeEnemy, setActiveEnemy] = useState<string|undefined>();
   const [remainingAP, setRemainingAP] = useState(2);
@@ -77,15 +88,14 @@ export function useCombatSystem():CombatSchematics {
   const [target, setTarget] = useState<CardSelectState | undefined>();
   const [resolution, setResolution] = useState<CardSelectState | undefined>();
   const [delayTimer, setDelayTimer] = useState(false);
-  const [knockedOut, setKnockedOut] = useState<string[]>([]);
   const [isBattleOver, setBattleOver] = useState<'loss'|'win'|undefined>();
 
   // ai set our active enemny
   useEffect(() => {
     if (!isPlayerTurn && !activeAbility && !target && !activeEnemy && !delayTimer) {
-      setActiveEnemy(enemies[randomZeroToXWhole(enemies.length - 1)].identifier);
+      setActiveEnemy(aliveEnemies[randomZeroToXWhole(aliveEnemies.length - 1)]);
     }
-  }, [activeAbility, activeEnemy, delayTimer, enemies, isPlayerTurn, target]);
+  }, [activeAbility, activeEnemy, aliveEnemies, delayTimer, enemies, isPlayerTurn, target]);
 
   // if there is an ability selected we are in targeting mode
   useEffect(
@@ -96,7 +106,7 @@ export function useCombatSystem():CombatSchematics {
   // the enemy has chosen a skill now we will select a target
   useEffect(() => {
     if (!isPlayerTurn && activeAbility && !target && activeEnemy && inTargetingMode) {
-      const choice = allies[randomZeroToXWhole(allies.length - 1)] as Characters;
+      const choice = aliveAllies[randomZeroToXWhole(aliveAllies.length - 1)] as Characters;
       switch (choice) {
         case Characters.Saoirse:
           saoirseCard.current.click();
@@ -117,7 +127,7 @@ export function useCombatSystem():CombatSchematics {
           break;
       }
     }
-  }, [activeAbility, activeEnemy, allies, inTargetingMode, isPlayerTurn, target]);
+  }, [activeAbility, activeEnemy, aliveAllies, allies, inTargetingMode, isPlayerTurn, target]);
 
   // if there is an ability and a target resolve the action
   useEffect(() => {
@@ -125,7 +135,8 @@ export function useCombatSystem():CombatSchematics {
       let result = target?.currentHealth;
 
       if (activeAbility?.name === 'attack' && Boolean(target)) {
-        result = target.currentHealth - 5;
+        const healthCalculation = target.currentHealth - 5;
+        result = healthCalculation < 0 ? 0 : healthCalculation;
       }
 
       setResolution({
@@ -165,21 +176,27 @@ export function useCombatSystem():CombatSchematics {
     }
   }, [isPlayerTurn, remainingAP]);
 
-  const handleKnockout = useCallback(
-    (identifier: string|Characters):void => setKnockedOut((s) => [...s, identifier]),
-    [],
-  );
+  const handleEnemyKnockout = useCallback((identifier:string):void => {
+    setAliveEnemies((e) => e.filter((c) => c !== identifier));
+    setKnockedOutEnemies((s) => [...s, identifier]);
+  }, []);
+
+  const handleAllyKnockout = useCallback((identifier: Characters):void => {
+    setAliveAllies((a) => a.filter((c) => c !== identifier));
+    setKnockedOutAllies((s) => [...s, identifier]);
+  }, []);
 
   // if all of one set is 0 battle ends
   useEffect(() => {
-    if (knockedOut.length >= 1) {
-      if (difference(allies, knockedOut).length === 0) {
+    if (knockedOutAllies.length >= 1 || knockedOutEnemies.length >= 1) {
+      if (aliveAllies.length <= 0) {
         setBattleOver('loss');
-      } else if (difference(enemies.map((e) => e.identifier), knockedOut).length === 0) {
+      } else if (aliveEnemies.length <= 0) {
         setBattleOver('win');
       }
     }
-  }, [allies, enemies, knockedOut, knockedOut.length]);
+  }, [aliveAllies.length, aliveEnemies.length, allies, enemies, knockedOutAllies.length,
+    knockedOutEnemies.length]);
 
   return {
     terrain,
@@ -195,7 +212,8 @@ export function useCombatSystem():CombatSchematics {
     setTarget,
     resolution,
     isBattleOver,
-    handleKnockout,
+    handleAllyKnockout,
+    handleEnemyKnockout,
     activeEnemy,
     artemisCard,
     fangCard,

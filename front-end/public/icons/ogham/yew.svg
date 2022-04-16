@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="60"
+   height="62.000072"
+   id="Ogham vertical letter iodhadh"
+   sodipodi:version="0.32"
+   inkscape:version="0.44"
+   version="1.0"
+   sodipodi:docbase="D:\Home\Wikipedia\up"
+   sodipodi:docname="Ogham vertical letter iodhadh.svg">
+  <defs
+     id="defs2165" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8.370958"
+     inkscape:cx="30"
+     inkscape:cy="31.000036"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1024"
+     inkscape:window-height="682"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4" />
+  <metadata
+     id="metadata2168">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-660.4285,-36.6479)">
+    <path
+       style="fill:black;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4.00000191;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 677.9285,89.64795 L 688.4285,89.64795 L 688.4285,98.64795 L 692.4285,98.64795 L 692.4285,89.64795 L 702.9285,89.64795 L 702.9285,85.64795 L 692.4285,85.64795 L 692.4285,79.64795 L 702.9285,79.64795 L 702.9285,75.64795 L 692.4285,75.64795 L 692.4285,69.64795 L 702.9285,69.64795 L 702.9285,65.64795 L 692.4285,65.64795 L 692.4285,59.6479 L 702.9285,59.6479 L 702.9285,55.6479 L 692.4285,55.6479 L 692.4285,49.6479 L 702.9285,49.6479 L 702.9285,45.6479 L 692.4285,45.6479 L 692.4285,36.6479 L 688.4285,36.6479 L 688.4285,45.6479 L 677.9285,45.6479 L 677.9285,49.6479 L 688.4285,49.6479 L 688.4285,55.6479 L 677.9285,55.6479 L 677.9285,59.6479 L 688.4285,59.6479 L 688.4285,65.64795 L 677.9285,65.64795 L 677.9285,69.64795 L 688.4285,69.64795 L 688.4285,75.64795 L 677.9285,75.64795 L 677.9285,79.64795 L 688.4285,79.64795 L 688.4285,85.64795 L 677.9285,85.64795 L 677.9285,89.64795 z "
+       id="path3996" />
+  </g>
+</svg>

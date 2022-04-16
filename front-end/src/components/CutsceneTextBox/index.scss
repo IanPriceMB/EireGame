@@ -3,10 +3,9 @@
   flex-grow: 4;
   height: 100%;
   padding: 12px;
-
+  background-color: rgba(0, 0, 0, .5);
+  color: white;
   border-radius: 3px;
-  border: 1px solid black;
-  background-color: white;
 
   &__name-plate {
     font-weight: bold;
@@ -22,5 +21,6 @@
     position: absolute;
     bottom: 12px;
     right: 12px;
+    z-index: 2;
   }
 }

@@ -3,18 +3,16 @@
   top: 12px;
   left: 12px;
 
-  height: 5%;
-  width: 5%;
-
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 3px;
+  background-color: rgba(0, 0, 0, .5);
+  color: white;
+  border-radius: 4px;
 
   z-index: 99;
 
-  &__options {
-    list-style: none;
-    padding: 12px;
-    margin: 0;
+  &__button {
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    border: none;
+    padding: 8px;
   }
 }

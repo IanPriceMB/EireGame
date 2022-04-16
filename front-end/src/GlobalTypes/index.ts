@@ -24,6 +24,10 @@ export type CombatAction = {
   identifier: Characters
 }
 
+export type DetailedCombatAction = {
+  detailedInfo?: string,
+} & CombatAction
+
 export type ActiveAbility = Omit<CombatAction, 'handleClick' | 'image'| 'identifier'> & {
   identifier: string|Characters
 } | undefined
@@ -41,13 +45,13 @@ export interface Combatant {
 }
 
 export interface Enemy extends Combatant {
-  oghams?: CombatAction[],
-  abilities?: CombatAction[],
-
+  oghams?: DetailedCombatAction[],
+  feats?: DetailedCombatAction[],
+  enchantments?: DetailedCombatAction[],
 }
 
 export interface Ally extends Enemy {
-  tinctures?: CombatAction[],
+  tinctures?: DetailedCombatAction[],
   attackConfig: CombatAction
   handleBack?: () => void,
   isOpen?: boolean;
@@ -59,8 +63,6 @@ export enum Characters {
   'Saoirse' = 'saoirse',
   'Bea' = 'bea',
   'Mordred' = 'mordred',
-  'Spacey' = 'spacey',
-  'Grania' = 'grania',
   'Fang' = 'fang',
 }
 
@@ -71,8 +73,9 @@ export type EnemyData = {
   currentHealth: number;
   maxHealth: number;
   isEnemy: boolean,
-  oghams?: string[];
-  abilities?: string[];
+  oghams?: Oghams[];
+  enchantments?: string[];
+  feats?: string[];
   fullArtSrc: string;
 }
 
@@ -83,13 +86,41 @@ export type CharacterData = Omit<EnemyData, 'name'|'identifier'> & {
   identifier: Characters,
 }
 
-export type CombatantProps<T> = {
+export type CombatantProps<D, I> = {
   inTargetingMode: boolean,
   setActiveAbility: Dispatch<SetStateAction<ActiveAbility>>,
   setTarget: Dispatch<SetStateAction<CardSelectState | undefined>>,
   resolution?: CardSelectState,
-  handleKnockout: (identifier: string|Characters) => void;
+  handleKnockout: (identifier:I) => void;
   activeEnemy?: string|undefined;
   isPlayerTurn?: boolean;
-  data: T
+  data: D
+}
+
+export enum Oghams {
+  'Birch' = 'Birch',
+  'Rowan' = 'Rowan',
+  'Alder' = 'Alder',
+  'Willow' = 'Willow',
+  'Ash' = 'Ash',
+  'Hawthorn' = 'Hawthorn',
+  'Oak' = 'Oak',
+  'Holly' = 'Holly',
+  'Hazel' = 'Hazel',
+  'Apple' = 'Apple',
+  'Vine' = 'Vine',
+  'Ivy' = 'Ivy',
+  'Reed' = 'Reed',
+  'Blackthorn' = 'Blackthorn',
+  'Elder' = 'Elder',
+  'Fir' = 'Fir',
+  'Gorse' = 'Gorse',
+  'Heather' = 'Heather',
+  'Poplar' = 'Poplar',
+  'Yew' = 'Yew',
+  'Grove' = 'Grove',
+  'Spindle' = 'Spindle',
+  'Honeysuckle' = 'Honeysuckle',
+  'Gooseberry' = 'Gooseberry',
+  'WitchHazel' = 'WitchHazel',
 }

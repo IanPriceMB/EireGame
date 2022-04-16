@@ -1,17 +1,17 @@
 import React from 'react';
-import { CombatAction } from '../../GlobalTypes';
-import { CombatButton } from '../CombatButton';
+import { DetailedCombatAction } from '../../GlobalTypes';
+import { CombatButtonInfo } from '../CombatButtonInfo';
 import './index.scss';
 
 export type QuickActionRowProps = {
-  actions: CombatAction[]
+  actions: Array<DetailedCombatAction>
 }
 
 export function QuickActionRow({ actions }:QuickActionRowProps):JSX.Element {
   return (
     <div className="quick-action-row">
       {actions && actions.map((action) => (
-        <CombatButton
+        <CombatButtonInfo
           key={action.id}
           {...action}
         />

@@ -13,7 +13,7 @@ export function useEnemy({
   handleKnockout,
   activeEnemy,
   data,
-}:CombatantProps<EnemyData>):Enemy {
+}:CombatantProps<EnemyData, string>):Enemy {
   const [currentHealth, setCurrentHealth] = useState(data.currentHealth);
   const [maxHealth, setMaxHealth] = useState(data.maxHealth);
   const [statuses, setStatuses] = useState(data.statuses);
@@ -29,7 +29,8 @@ export function useEnemy({
         identifier: data.identifier,
       });
     }
-  }, [activeEnemy, data.currentHealth, data.identifier, data.isEnemy, data.maxHealth, data.name, data.statuses, setActiveAbility]);
+  }, [activeEnemy, data.currentHealth, data.identifier, data.isEnemy,
+    data.maxHealth, data.name, data.statuses, setActiveAbility]);
 
   // handle resolution of combat
   useEffect(() => {

@@ -12,7 +12,7 @@ interface CombatCharacterProps extends Ally {
 
 export const CombatCharacter = forwardRef(({
   oghams,
-  abilities,
+  enchantments,
   tinctures,
   handleBack,
   isOpen,
@@ -36,7 +36,7 @@ export const CombatCharacter = forwardRef(({
             <h1 className="combat-character__quick-title">Quick Actions</h1>
             <QuickActionsGrid
               oghams={oghams}
-              abilities={abilities}
+              enchantments={enchantments}
               tinctures={tinctures}
             />
           </div>
@@ -72,7 +72,7 @@ CombatCharacter.defaultProps = {
   isOpen: false,
   handleBack: undefined,
   oghams: undefined,
-  abilities: undefined,
+  enchantments: undefined,
   tinctures: undefined,
   isPlayerTurn: undefined,
 };
