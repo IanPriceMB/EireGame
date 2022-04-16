@@ -37,13 +37,13 @@ export const CityMain = ():JSX.Element => {
           >
             Witchcraft Paraphernalia
           </Link>
-          <Link
+          {/* <Link
             to="brothel"
             className="city-main__link"
             id="brothel"
           >
             Brothel
-          </Link>
+          </Link> */}
           <Link
             to="library"
             className="city-main__link"

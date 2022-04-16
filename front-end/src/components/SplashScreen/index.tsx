@@ -9,7 +9,7 @@ export function SplashScreen(): JSX.Element {
       <button
         className="splash-screen__start-button"
         type="button"
-        onClick={() => navigate('/cutscene')}
+        onClick={() => navigate('/city')}
       >
         Start
       </button>
